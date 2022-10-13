@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Dokkang</string>
+    <string name="id">ID</string>
+    <string name="pwd">Password</string>
+    <string name="nn">Nickname</string>
+    <string name="dpt">Department</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
