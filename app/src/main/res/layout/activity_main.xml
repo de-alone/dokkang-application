@@ -7,12 +7,98 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/idTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:text="ID"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/left_vertical"
+        app:layout_constraintTop_toTopOf="@+id/horizontal" />
+
+    <TextView
+        android:id="@+id/pwTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Password"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/idEditText"
+        app:layout_constraintTop_toBottomOf="@+id/idEditText" />
+
+    <EditText
+        android:id="@+id/idEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="ID"
+        android:inputType="textPersonName"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical"
+        app:layout_constraintStart_toStartOf="@+id/idTextView"
+        app:layout_constraintTop_toBottomOf="@+id/idTextView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="40dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="40dp" />
+
+    <EditText
+        android:id="@+id/pwEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical"
+        app:layout_constraintStart_toStartOf="@+id/pwTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pwTextView" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#004907"
+        android:text="Log In"
+        android:textSize="20sp"
+        app:cornerRadius="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical"
+        app:layout_constraintStart_toStartOf="@+id/left_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/pwEditText" />
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Sign Up"
+        android:textColor="#004907"
+        android:textSize="20sp"
+        app:cornerRadius="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical"
+        app:layout_constraintStart_toStartOf="@+id/left_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
