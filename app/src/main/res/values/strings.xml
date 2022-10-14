@@ -5,4 +5,5 @@
     <string name="nn">Nickname</string>
     <string name="dpt">Department</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="email">E-Mail</string>
 </resources>
