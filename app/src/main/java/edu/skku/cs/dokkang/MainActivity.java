@@ -2,6 +2,7 @@ package edu.skku.cs.dokkang;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         Button signupButton = findViewById(R.id.signupButton);
         /* signup - onClick */
         signupButton.setOnClickListener(view -> {
-
+            Intent intent = new Intent(MainActivity.this, Sign_Up.class);
+            startActivity(intent);
         });
     }
 }
