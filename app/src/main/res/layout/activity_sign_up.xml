@@ -46,6 +46,16 @@
         app:layout_constraintStart_toStartOf="@+id/nnEditText"
         app:layout_constraintTop_toBottomOf="@+id/nnEditText"/>
 
+    <TextView
+        android:id="@+id/EmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/email"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/dpEditText"
+        app:layout_constraintTop_toBottomOf="@+id/dpEditText"/>
+
     <EditText
         android:id="@+id/signup_idEditText"
         android:layout_width="0dp"
@@ -116,6 +126,20 @@
         app:layout_constraintTop_toBottomOf="@+id/DepartmentTextView"
         android:importantForAutofill="no"/>
 
+    <EditText
+        android:id="@+id/EmailEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="text"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/right_vertical"
+        app:layout_constraintStart_toStartOf="@+id/EmailTextView"
+        app:layout_constraintTop_toBottomOf="@+id/EmailTextView"
+        android:importantForAutofill="no"/>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="200dp"
@@ -127,8 +151,7 @@
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/left_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/dpEditText" />
-
+        app:layout_constraintTop_toBottomOf="@+id/EmailEditText" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -136,6 +159,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.09" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
