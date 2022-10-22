@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dokkang" >
         <activity
-            android:name=".Sign_Up"
+            android:name=".SignUp"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
