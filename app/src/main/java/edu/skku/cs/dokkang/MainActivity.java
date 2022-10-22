@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Button signupButton = findViewById(R.id.signupButton);
         /* signup - onClick */
         signupButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, Sign_Up.class);
+            Intent intent = new Intent(MainActivity.this, SignUp.class);
             startActivity(intent);
         });
     }
