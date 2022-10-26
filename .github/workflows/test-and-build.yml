@@ -33,4 +33,4 @@ jobs:
       if: github.ref_name == 'master'
       with:
         name: dokkang-application-apk
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
+        path: app/build/outputs/apk/
