@@ -11,10 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/id"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/left_vertical"
-        app:layout_constraintTop_toTopOf="@+id/horizontal" />
+        app:layout_constraintTop_toTopOf="@+id/top_horizontal" />
 
     <TextView
         android:id="@+id/signup_pwTextView"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/pwd"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/signup_idEditText"
         app:layout_constraintTop_toBottomOf="@+id/signup_idEditText" />
 
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/nn"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/signup_pwEditText"
-        app:layout_constraintTop_toBottomOf="@+id/signup_pwEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/signup_pwEditText" />
 
     <TextView
         android:id="@+id/DepartmentTextView"
@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/dpt"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/nnEditText"
-        app:layout_constraintTop_toBottomOf="@+id/nnEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/nnEditText" />
 
     <TextView
         android:id="@+id/EmailTextView"
@@ -52,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/email"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/dpEditText"
-        app:layout_constraintTop_toBottomOf="@+id/dpEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/dpEditText" />
 
     <EditText
         android:id="@+id/signup_idEditText"
@@ -63,12 +63,12 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/id"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/signup_idTextView"
-        app:layout_constraintTop_toBottomOf="@+id/signup_idTextView"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/signup_idTextView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_vertical"
@@ -91,12 +91,12 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/pwd"
+        android:importantForAutofill="no"
         android:inputType="textPassword"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/signup_pwTextView"
-        app:layout_constraintTop_toBottomOf="@+id/signup_pwTextView"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/signup_pwTextView" />
 
     <EditText
         android:id="@+id/nnEditText"
@@ -105,12 +105,12 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/nn"
+        android:importantForAutofill="no"
         android:inputType="text"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/NickNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/NickNameTextView"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/NickNameTextView" />
 
     <EditText
         android:id="@+id/dpEditText"
@@ -119,12 +119,12 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/dpt"
+        android:importantForAutofill="no"
         android:inputType="text"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/DepartmentTextView"
-        app:layout_constraintTop_toBottomOf="@+id/DepartmentTextView"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/DepartmentTextView" />
 
     <EditText
         android:id="@+id/EmailEditText"
@@ -133,32 +133,40 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/email"
+        android:importantForAutofill="no"
         android:inputType="text"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/EmailTextView"
-        app:layout_constraintTop_toBottomOf="@+id/EmailTextView"
-        android:importantForAutofill="no"/>
+        app:layout_constraintTop_toBottomOf="@+id/EmailTextView" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="200dp"
         android:layout_height="55dp"
-        android:layout_marginTop="32dp"
         android:backgroundTint="#004907"
         android:text="@string/sign_up"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:cornerRadius="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_horizontal"
         app:layout_constraintEnd_toStartOf="@+id/right_vertical"
         app:layout_constraintStart_toStartOf="@+id/left_vertical"
         app:layout_constraintTop_toBottomOf="@+id/EmailEditText" />
 
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontal"
+        android:id="@+id/top_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
