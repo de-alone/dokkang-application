@@ -1,8 +1,8 @@
 package edu.skku.cs.dokkang;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
 
 public class MyPage extends AppCompatActivity {
 
