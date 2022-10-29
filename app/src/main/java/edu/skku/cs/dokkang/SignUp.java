@@ -1,10 +1,27 @@
 package edu.skku.cs.dokkang;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SignUp extends AppCompatActivity {
 
@@ -18,28 +35,64 @@ public class SignUp extends AppCompatActivity {
         EditText signup_pw = findViewById(R.id.signup_pwEditText);
         EditText signup_nickname = findViewById(R.id.nnEditText);
         EditText signup_department = findViewById(R.id.dpEditText);
+        EditText signup_email = findViewById(R.id.emailEditText);
 
         // sign-up button
         Button signup_btn = findViewById(R.id.loginButton);
 
         signup_btn.setOnClickListener(view -> {
-            /* 서버와 통신하는 부분 */
+            String id = signup_id.getText().toString();
+            String pw = signup_pw.getText().toString();
+            String email = signup_email.getText().toString();
 
-            boolean result = true;
-            /* 서버와 통신하는 부분 */
+            OkHttpClient client = new OkHttpClient();
 
-            if(result) {
-                finish();
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Failed",Toast.LENGTH_SHORT).show();
-            }
+            SignUpDataModel data = new SignUpDataModel();
+            data.setUsername(id);
+            data.setEmail(email);
+            data.setPassword(pw);
 
+            Gson gson = new Gson();
+            String json = gson.toJson(data, SignUpDataModel.class);
+
+            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user").newBuilder();
+            String url = urlBuilder.build().toString();
+            Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
+
+            client.newCall(req).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    /* response */
+                    final String res = response.body().string();
+
+                    Gson gson = new GsonBuilder().create();
+                    final SignUpResponseDataModel data = gson.fromJson(res, SignUpResponseDataModel.class);
+
+                    if (data.getStatus().equals("User registered successfully!")) {
+                        SignUp.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        finish();
+                    }
+                    else {
+                        SignUp.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
         });
-
     }
-
-
-
-
 }
