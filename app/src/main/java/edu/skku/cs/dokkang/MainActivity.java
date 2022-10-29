@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
             Gson gson = new Gson();
             String json = gson.toJson(data, LoginDataModel.class);
 
-            HttpUrl.Builder urlBuilder = HttpUrl.parse("http://db.dokkang.tk:8080").newBuilder();
+            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/auth").newBuilder();
             String url = urlBuilder.build().toString();
-
             Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
 
             client.newCall(req).enqueue(new Callback() {
@@ -70,48 +70,35 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     /* response */
                     final String res = response.body().string();
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
                     Gson gson = new GsonBuilder().create();
                     final LoginResponseDataModel data = gson.fromJson(res, LoginResponseDataModel.class);
 
-                    if (data.getStatus() == "ok") {
+                    if (data.getStatus().equals("ok")) {
                         String message = "Login success";
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         });
 
-                        Intent intent = new Intent(MainActivity.this, SignUp.class);
+                        Intent intent = new Intent(MainActivity.this, MyPage.class);
+                        /* token delivery */
+                        intent.putExtra("token", data.getToken());
                         startActivity(intent);
+                        finish();
                     }
                     else {
-                        final int status = response.code();
-                        String message = "";
+                        String message = "Login failed";
 
-                        if (status == 404) {
-                            message += "User id does not exist";
-                        } else if (status == 401) {
-                            message += "Password not matched";
-                        } else {
-                            message += "Login failed";
-                        }
-
-                        String finalMessage = message;
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), finalMessage, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         });
-
                     }
                 }
             });
