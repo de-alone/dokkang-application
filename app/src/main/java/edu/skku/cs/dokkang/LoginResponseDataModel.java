@@ -2,8 +2,8 @@ package edu.skku.cs.dokkang;
 
 public class LoginResponseDataModel {
     private String status;
+    private long user_id;
     private String token;
-//    private long user_id;
 
     public String getStatus() {
         return status;
