@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                         Intent intent = new Intent(MainActivity.this, MyPage.class);
-                        /* token delivery */
+                        /*  delivery */
                         intent.putExtra("token", data.getToken());
+                        intent.putExtra("user_id", data.getUser_id());
                         startActivity(intent);
                         finish();
                     }
