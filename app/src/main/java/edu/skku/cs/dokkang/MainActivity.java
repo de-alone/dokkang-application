@@ -62,7 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
             client.newCall(req).enqueue(new Callback() {
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {  // can't receive any response from server
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "server failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     e.printStackTrace();
                 }
 
