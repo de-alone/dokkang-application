@@ -73,8 +73,10 @@ public class EditSubjectListViewAdapter extends BaseAdapter {
         lecture_no.setText(Integer.toString(item.get(i).lecture_no));
         professor.setText(item.get(i).prefessor_name);
 
-        /*check lectures */
+        /*if checked before, then check the box*/
         checkBox.setChecked(item.get(i).checked);
+
+        /*check lectures */
         checkBox.setOnClickListener(v -> {
             item.get(i).checked = checkBox.isChecked();
         });
