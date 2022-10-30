@@ -78,7 +78,13 @@ public class SignUp extends AppCompatActivity {
 
                 client.newCall(req).enqueue(new Callback() {
                     @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) { // can't receive any response from server
+                        SignUp.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SignUp.this, "server failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         e.printStackTrace();
                     }
 
