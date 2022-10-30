@@ -2,7 +2,6 @@ package edu.skku.cs.dokkang;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /*lecture infomation*/
-class Lecture{
+class Subject{
     public String lecture_name;
     public String prefessor_name;
     public int lecture_id;
     public int lecture_no;
 
 
-    public Lecture(String lecture_name, String prefessor_name, int lecture_id, int lecture_no) {
+    public Subject(String lecture_name, String prefessor_name, int lecture_id, int lecture_no) {
         this.lecture_name = lecture_name;
         this.prefessor_name = prefessor_name;
         this.lecture_id = lecture_id;
@@ -29,13 +28,13 @@ class Lecture{
 }
 
 
-public class MyLectureListViewAdapter extends BaseAdapter {
+public class MySubjectListViewAdapter extends BaseAdapter {
 
-    private ArrayList<Lecture> item;
+    private ArrayList<Subject> item;
     private Context mContext;
 
 
-    public MyLectureListViewAdapter(ArrayList<Lecture> item, Context mContext) {
+    public MySubjectListViewAdapter(ArrayList<Subject> item, Context mContext) {
         this.item = item;
         this.mContext = mContext;
     }
@@ -61,10 +60,12 @@ public class MyLectureListViewAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.subjectlist, viewGroup, false);
         }
+
         TextView lecture_name = view.findViewById(R.id.subjectNametextView);
         Button community_btn = view.findViewById(R.id.communitybutton);
         Button study_btn = view.findViewById(R.id.studybutton);
 
+        /* set Textview as lecture name */
         lecture_name.setText(item.get(i).lecture_name);
 
         /* go to the community activity*/
