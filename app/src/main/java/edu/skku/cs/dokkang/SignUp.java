@@ -41,58 +41,75 @@ public class SignUp extends AppCompatActivity {
         Button signup_btn = findViewById(R.id.loginButton);
 
         signup_btn.setOnClickListener(view -> {
+
+
             String id = signup_id.getText().toString();
             String pw = signup_pw.getText().toString();
             String email = signup_email.getText().toString();
+            String nickname = signup_nickname.getText().toString();
+            String department = signup_department.getText().toString();
 
-            OkHttpClient client = new OkHttpClient();
+            /*
+            checking input
+            1. blank
+            2. length of the password < 6
+             */
 
-            SignUpDataModel data = new SignUpDataModel();
-            data.setUsername(id);
-            data.setEmail(email);
-            data.setPassword(pw);
+            if(id.length() == 0 || pw.length() == 0 || email.length() == 0 || nickname.length() == 0 || department.length() == 0) {
+                Toast.makeText(SignUp.this, "Please fill in the blank", Toast.LENGTH_SHORT).show();
+            }
+            else if(pw.length() < 6) {
+                Toast.makeText(SignUp.this, "Please enter a password of at least six digits", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                OkHttpClient client = new OkHttpClient();
 
-            Gson gson = new Gson();
-            String json = gson.toJson(data, SignUpDataModel.class);
+                SignUpDataModel data = new SignUpDataModel();
+                data.setUsername(id);
+                data.setEmail(email);
+                data.setPassword(pw);
 
-            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user").newBuilder();
-            String url = urlBuilder.build().toString();
-            Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
+                Gson gson = new Gson();
+                String json = gson.toJson(data, SignUpDataModel.class);
 
-            client.newCall(req).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    e.printStackTrace();
-                }
+                HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user").newBuilder();
+                String url = urlBuilder.build().toString();
+                Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
 
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    /* response */
-                    final String res = response.body().string();
-
-                    Gson gson = new GsonBuilder().create();
-                    final SignUpResponseDataModel data = gson.fromJson(res, SignUpResponseDataModel.class);
-
-                    if (data.getStatus().equals("User registered successfully!")) {
-                        SignUp.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        finish();
+                client.newCall(req).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        e.printStackTrace();
                     }
-                    else {
-                        SignUp.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        /* response */
+                        final String res = response.body().string();
+
+                        Gson gson = new GsonBuilder().create();
+                        final SignUpResponseDataModel data = gson.fromJson(res, SignUpResponseDataModel.class);
+
+                        if (data.getStatus().equals("User registered successfully!")) {
+                            SignUp.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            finish();
+                        } else {
+                            SignUp.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     }
 }
