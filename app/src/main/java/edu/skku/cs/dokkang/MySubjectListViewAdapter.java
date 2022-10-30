@@ -12,14 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /*lecture infomation*/
-class Subject{
+class MySubject {
     public String lecture_name;
     public String prefessor_name;
     public int lecture_id;
     public int lecture_no;
 
 
-    public Subject(String lecture_name, String prefessor_name, int lecture_id, int lecture_no) {
+    public MySubject(String lecture_name, String prefessor_name, int lecture_id, int lecture_no) {
         this.lecture_name = lecture_name;
         this.prefessor_name = prefessor_name;
         this.lecture_id = lecture_id;
@@ -30,11 +30,11 @@ class Subject{
 
 public class MySubjectListViewAdapter extends BaseAdapter {
 
-    private ArrayList<Subject> item;
+    private ArrayList<MySubject> item;
     private Context mContext;
 
 
-    public MySubjectListViewAdapter(ArrayList<Subject> item, Context mContext) {
+    public MySubjectListViewAdapter(ArrayList<MySubject> item, Context mContext) {
         this.item = item;
         this.mContext = mContext;
     }

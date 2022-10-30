@@ -14,7 +14,7 @@ public class MyPage extends AppCompatActivity {
     private ListView listView;
 
     private MySubjectListViewAdapter listViewAdapter;
-    private ArrayList<Subject> items;
+    private ArrayList<MySubject> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class MyPage extends AppCompatActivity {
 
         // test set  (나중에 삭제해주세요)
         items = new ArrayList<>();
-        Subject TestLecture1 = new Subject("인공지능개론", "박진영", 1, 1);
-        Subject TestLecture2 = new Subject("소프트웨어공학개론", "차수영", 2, 2);
+        MySubject TestLecture1 = new MySubject("인공지능개론", "박진영", 1, 1);
+        MySubject TestLecture2 = new MySubject("소프트웨어공학개론", "차수영", 2, 2);
         items.add(TestLecture1);
         items.add(TestLecture2);
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
