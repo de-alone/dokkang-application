@@ -10,31 +10,61 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/*lecture infomation*/
+/*lecture information*/
 class MySubject {
-    public String lecture_name;
-    public String prefessor_name;
-    public int lecture_id;
-    public int lecture_no;
+    private String name;
+    private String professor;
+    private int id;
+    private String no;
+    private boolean checked = false;
 
-
-    public MySubject(String lecture_name, String prefessor_name, int lecture_id, int lecture_no) {
-        this.lecture_name = lecture_name;
-        this.prefessor_name = prefessor_name;
-        this.lecture_id = lecture_id;
-        this.lecture_no = lecture_no;
+    public String getName() {
+        return name;
     }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public boolean getChecked() {return checked; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public void setChecked(boolean checked) {this.checked = checked; }
 }
 
 
 public class MySubjectListViewAdapter extends BaseAdapter {
 
-    private ArrayList<MySubject> item;
+    private List<MySubject> item;
     private Context mContext;
 
 
-    public MySubjectListViewAdapter(ArrayList<MySubject> item, Context mContext) {
+    public MySubjectListViewAdapter(List<MySubject> item, Context mContext) {
         this.item = item;
         this.mContext = mContext;
     }
@@ -66,29 +96,27 @@ public class MySubjectListViewAdapter extends BaseAdapter {
         Button study_btn = view.findViewById(R.id.studybutton);
 
         /* set Textview as lecture name */
-        lecture_name.setText(item.get(i).lecture_name);
+        lecture_name.setText(item.get(i).getName());
 
         /* go to the community activity*/
         community_btn.setOnClickListener(v -> {
             Intent intent = new Intent(viewGroup.getContext(), CommunityMain.class );
-            intent.putExtra("lecture", item.get(i).lecture_name);
-            intent.putExtra("professor", item.get(i).prefessor_name);
-            intent.putExtra("lecture_id", item.get(i).lecture_id);
-            intent.putExtra("lecture_no", item.get(i).lecture_no);
+            intent.putExtra("lecture", item.get(i).getName());
+            intent.putExtra("professor", item.get(i).getProfessor());
+            intent.putExtra("lecture_id", item.get(i).getId());
+            intent.putExtra("lecture_no", item.get(i).getNo());
             viewGroup.getContext().startActivity(intent);
         });
 
         /* go to the study group activity*/
         study_btn.setOnClickListener(v -> {
             Intent intent = new Intent(viewGroup.getContext(), StudyGroupMain.class );
-            intent.putExtra("lecture", item.get(i).lecture_name);
-            intent.putExtra("professor", item.get(i).prefessor_name);
-            intent.putExtra("lecture_id", item.get(i).lecture_id);
-            intent.putExtra("lecture_no", item.get(i).lecture_no);
+            intent.putExtra("lecture", item.get(i).getName());
+            intent.putExtra("professor", item.get(i).getProfessor());
+            intent.putExtra("lecture_id", item.get(i).getId());
+            intent.putExtra("lecture_no", item.get(i).getNo());
             viewGroup.getContext().startActivity(intent);
         });
-
-
 
         return view;
     }

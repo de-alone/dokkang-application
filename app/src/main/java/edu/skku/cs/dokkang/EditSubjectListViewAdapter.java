@@ -1,42 +1,21 @@
 package edu.skku.cs.dokkang;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
-class Subject {
-    public String lecture_name;
-    public String prefessor_name;
-    public int lecture_id;
-    public int lecture_no;
-    public boolean checked;
-
-    public Subject(String lecture_name, String prefessor_name, int lecture_id, int lecture_no, boolean checked) {
-        this.lecture_name = lecture_name;
-        this.prefessor_name = prefessor_name;
-        this.lecture_id = lecture_id;
-        this.lecture_no = lecture_no;
-        this.checked = checked;
-    }
-}
-
+import java.util.List;
 
 public class EditSubjectListViewAdapter extends BaseAdapter {
 
-    private ArrayList<Subject> item;
+    private List<MySubject> item;
     private Context mContext;
 
 
-    public EditSubjectListViewAdapter(ArrayList<Subject> item, Context mContext) {
+    public EditSubjectListViewAdapter(List<MySubject> item, Context mContext) {
         this.item = item;
         this.mContext = mContext;
     }
@@ -69,18 +48,17 @@ public class EditSubjectListViewAdapter extends BaseAdapter {
         CheckBox checkBox = view.findViewById(R.id.checkBox);
 
         /*show lecture info */
-        lecture_name.setText(item.get(i).lecture_name);
-        lecture_no.setText(Integer.toString(item.get(i).lecture_no));
-        professor.setText(item.get(i).prefessor_name);
+        lecture_name.setText(item.get(i).getName());
+        lecture_no.setText(item.get(i).getNo());
+        professor.setText(item.get(i).getProfessor());
 
         /*if checked before, then check the box*/
-        checkBox.setChecked(item.get(i).checked);
+        checkBox.setChecked(item.get(i).getChecked());
 
         /*check lectures */
         checkBox.setOnClickListener(v -> {
-            item.get(i).checked = checkBox.isChecked();
+            item.get(i).setChecked(checkBox.isChecked());
         });
-
 
         return view;
     }
