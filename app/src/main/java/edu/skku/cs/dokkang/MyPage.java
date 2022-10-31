@@ -1,13 +1,29 @@
 package edu.skku.cs.dokkang;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MyPage extends AppCompatActivity {
 
@@ -32,27 +48,69 @@ public class MyPage extends AppCompatActivity {
 
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
+        OkHttpClient client = new OkHttpClient();
 
-        // test set  (나중에 삭제해주세요)
-        items = new ArrayList<>();
-        MySubject TestLecture1 = new MySubject("인공지능개론", "박진영", 1, 1);
-        MySubject TestLecture2 = new MySubject("소프트웨어공학개론", "차수영", 2, 2);
-        items.add(TestLecture1);
-        items.add(TestLecture2);
-        /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/"+user_id+"/lectures").newBuilder();
+        String url = urlBuilder.build().toString();
+        Request req = new Request.Builder().url(url)
+                .addHeader("Authorization", "Bearer " + token)
+                .get().build();
 
+        client.newCall(req).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { // can't receive any response from server
+                MyPage.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MyPage.this, "server failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                e.printStackTrace();
+            }
 
-        /* show list of my lectures*/
-        listViewAdapter = new MySubjectListViewAdapter(items, getApplicationContext());
-        listView.setAdapter(listViewAdapter);
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                /* response */
+                final String res = response.body().string();
 
-        /*subject edit button click events*/
-        subject_edit_btn.setOnClickListener(view -> {
-            Intent se_intent = new Intent(MyPage.this, SubjectEdit.class);
-            se_intent.putExtra("user_id", user_id);
-            se_intent.putExtra("token", token);
-            startActivity(se_intent);
+                Gson gson = new GsonBuilder().create();
+                final LectureDataModel data = gson.fromJson(res, LectureDataModel.class);
 
+                MyPage.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MyPage.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                if (response.isSuccessful()) {
+                    List<MySubject> lectures = data.getLectures();
+                    ArrayList<String> check_lecture_nos = new ArrayList<>();
+
+                    for (MySubject subject : lectures) {
+                        check_lecture_nos.add(subject.getNo());
+                    }
+
+                    MyPage.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /* show list of my lectures*/
+                            listViewAdapter = new MySubjectListViewAdapter(lectures, getApplicationContext());
+                            listView.setAdapter(listViewAdapter);
+
+                            /*subject edit button click events*/
+                            subject_edit_btn.setOnClickListener(view -> {
+                                Intent se_intent = new Intent(MyPage.this, SubjectEdit.class);
+                                se_intent.putExtra("user_id", user_id);
+                                se_intent.putExtra("token", token);
+                                se_intent.putExtra("checked_lecture_no", check_lecture_nos);
+                                startActivity(se_intent);
+
+                            });
+                        }
+                    });
+                }
+            }
         });
 
         /*personal infomation button click events*/
@@ -62,6 +120,9 @@ public class MyPage extends AppCompatActivity {
             pinfo_intent.putExtra("token", token);
             startActivity(pinfo_intent);
         });
+    }
+
+    private void getAllLectures() {
 
     }
 }
