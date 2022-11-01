@@ -3,6 +3,7 @@ package edu.skku.cs.dokkang;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ import okhttp3.Response;
 
 public class MyPage extends AppCompatActivity {
 
+    public static Activity MyPage_activity;
+
     private ListView listView;
 
     private MySubjectListViewAdapter listViewAdapter;
@@ -45,6 +48,8 @@ public class MyPage extends AppCompatActivity {
         Intent intent = getIntent();
         String token = intent.getStringExtra("token");
         long user_id = intent.getLongExtra("user_id",0);
+
+        MyPage_activity = MyPage.this;
 
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/

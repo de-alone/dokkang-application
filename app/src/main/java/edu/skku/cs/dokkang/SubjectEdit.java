@@ -45,6 +45,9 @@ public class SubjectEdit extends AppCompatActivity {
 
         Button confirm_btn = findViewById(R.id.confirmButton);
         listView = findViewById(R.id.subjectListView);
+        Intent mypage_intent = new Intent(SubjectEdit.this, MyPage.class);
+        mypage_intent.putExtra("token", token);
+        mypage_intent.putExtra("user_id", user_id);
 
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
@@ -138,7 +141,13 @@ public class SubjectEdit extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (response.isSuccessful()) {
+                                /* 이전에 실행한 MyPage activity와 현재 SubjectEdit activity를 종료하고 새로운 mypage activity를 실행*/
+                                MyPage mypage_activity = (MyPage) MyPage.MyPage_activity;
+                                mypage_activity.finish();
+                                startActivity(mypage_intent);
                                 Toast.makeText(SubjectEdit.this, "updated selected lectures!", Toast.LENGTH_SHORT).show();
+                                finish();
+
                             } else {
                                 Toast.makeText(SubjectEdit.this, "failed to update selected lectures with " + response.body().toString(), Toast.LENGTH_SHORT).show();
                             }
@@ -147,7 +156,8 @@ public class SubjectEdit extends AppCompatActivity {
                 }
             });
 
-            finish();
+
+
         });
     }
 }
