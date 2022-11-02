@@ -22,36 +22,57 @@ import okhttp3.Response;
 
 public class RestAPICaller {
     public static final MediaType JsonType = MediaType.get("application/json; charset=utf-8");
+    private String token = null;
 
-    public static void Get(String uri, Callback callback) {
+    public RestAPICaller() {
+    }
+
+    public RestAPICaller(String token) {
+        this.token = token;
+    }
+
+    public void Get(String uri, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
         String url = urlBuilder.build().toString();
-        Request request = new Request.Builder().url(url).get().build();
+        Request.Builder requestBuilder = new Request.Builder().url(url);
 
+        if (token != null) {
+            requestBuilder = requestBuilder.addHeader("Authorization", "Bearer " + token);
+        }
+
+        Request request = requestBuilder.get().build();
         client.newCall(request).enqueue(callback);
     }
 
-    public static void Post(String uri, String body, Callback callback) {
+    public void Post(String uri, String body, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
         String url = urlBuilder.build().toString();
-        Request request = new Request.Builder().url(url)
-                .post(RequestBody.create(body, JsonType)).build();
+        Request.Builder requestBuilder = new Request.Builder().url(url);
 
+        if (token != null) {
+            requestBuilder = requestBuilder.addHeader("Authorization", "Bearer " + token);
+        }
+
+        Request request = requestBuilder.post(RequestBody.create(body, JsonType)).build();
         client.newCall(request).enqueue(callback);
     }
 
-    public static void Put(String uri, String body, Callback callback) {
+    public void Put(String uri, String body, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
         String url = urlBuilder.build().toString();
-        Request request = new Request.Builder().url(url)
-                .put(RequestBody.create(body, JsonType)).build();
+        Request.Builder requestBuilder = new Request.Builder().url(url);
 
+        if (token != null) {
+            requestBuilder = requestBuilder.addHeader("Authorization", "Bearer " + token);
+        }
+
+        Request request = requestBuilder.put(RequestBody.create(body, JsonType)).build();
         client.newCall(request).enqueue(callback);
     }
 
