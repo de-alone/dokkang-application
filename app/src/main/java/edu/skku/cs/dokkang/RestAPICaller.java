@@ -31,7 +31,7 @@ public class RestAPICaller {
         this.token = token;
     }
 
-    public void Get(String uri, Callback callback) {
+    public void get(String uri, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
@@ -46,7 +46,7 @@ public class RestAPICaller {
         client.newCall(request).enqueue(callback);
     }
 
-    public void Post(String uri, String body, Callback callback) {
+    public void post(String uri, String body, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
@@ -61,7 +61,7 @@ public class RestAPICaller {
         client.newCall(request).enqueue(callback);
     }
 
-    public void Put(String uri, String body, Callback callback) {
+    public void put(String uri, String body, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();

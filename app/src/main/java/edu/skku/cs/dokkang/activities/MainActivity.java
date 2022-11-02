@@ -6,27 +6,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
 
 import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.LoginRequest;
 import edu.skku.cs.dokkang.data_models.response.LoginResponse;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             Gson gson = new Gson();
             String payload = gson.toJson(data, LoginRequest.class);
 
-            new RestAPICaller().Post(
+            new RestAPICaller().post(
                 Constant.SERVER_BASE_URI + "/auth",
                 payload,
                 new RestAPICaller.ApiCallback<LoginResponse>(
