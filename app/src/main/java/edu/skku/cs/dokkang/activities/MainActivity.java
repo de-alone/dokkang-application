@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.LoginRequest;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             String payload = gson.toJson(data, LoginRequest.class);
 
             new RestAPICaller().Post(
-                "https://api.dokkang.tk/auth",
+                Constant.SERVER_BASE_URI + "/auth",
                 payload,
                 new RestAPICaller.ApiCallback<LoginResponse>(
                     MainActivity.this,

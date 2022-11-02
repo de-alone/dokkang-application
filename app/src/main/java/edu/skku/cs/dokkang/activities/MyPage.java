@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.MySubjectListViewAdapter;
@@ -55,7 +56,7 @@ public class MyPage extends AppCompatActivity {
         MyPage_activity = MyPage.this;
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
-        new RestAPICaller(token).Get("https://api.dokkang.tk/user/" + user_id + "/lectures",
+        new RestAPICaller(token).Get(Constant.SERVER_BASE_URI + "/user/" + user_id + "/lectures",
             new RestAPICaller.ApiCallback<LectureResponse>(
                     MyPage.this,
                     LectureResponse.class,
