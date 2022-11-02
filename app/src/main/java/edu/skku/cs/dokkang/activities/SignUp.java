@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.SignUpRequest;
 import edu.skku.cs.dokkang.data_models.response.SignUpResponse;
 import okhttp3.Call;
@@ -62,8 +63,6 @@ public class SignUp extends AppCompatActivity {
             } else if (pw.length() < 6) {
                 Toast.makeText(SignUp.this, "Please enter a password of at least six digits", Toast.LENGTH_SHORT).show();
             } else {
-                OkHttpClient client = new OkHttpClient();
-
                 SignUpRequest data = new SignUpRequest();
                 data.setUsername(id);
                 data.setEmail(email);
@@ -72,49 +71,22 @@ public class SignUp extends AppCompatActivity {
                 Gson gson = new Gson();
                 String json = gson.toJson(data, SignUpRequest.class);
 
-                HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user").newBuilder();
-                String url = urlBuilder.build().toString();
-                Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
-
-                client.newCall(req).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) { // can't receive any response from server
-                        SignUp.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(SignUp.this, "server failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        /* response */
-                        final String res = response.body().string();
-
-                        Gson gson = new GsonBuilder().create();
-                        final SignUpResponse data = gson.fromJson(res, SignUpResponse.class);
-
-                        if (data.getStatus().equals("User registered successfully!")) {
+                new RestAPICaller().Post("https://api.dokkang.tk/user",
+                    json,
+                    new RestAPICaller.ApiCallback<SignUpResponse>(
+                        SignUp.this,
+                        SignUpResponse.class,
+                        res -> {
                             SignUp.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUp.this, res.getStatus(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-
                             finish();
-                        } else {
-                            SignUp.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(SignUp.this, data.getStatus(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
                         }
-                    }
-                });
+                    )
+                );
             }
         });
     }

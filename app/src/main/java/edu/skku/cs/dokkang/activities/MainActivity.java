@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.LoginRequest;
 import edu.skku.cs.dokkang.data_models.response.LoginResponse;
 import okhttp3.Call;
@@ -56,33 +57,15 @@ public class MainActivity extends AppCompatActivity {
             data.setPassword(pw);
 
             Gson gson = new Gson();
-            String json = gson.toJson(data, LoginRequest.class);
+            String payload = gson.toJson(data, LoginRequest.class);
 
-            HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/auth").newBuilder();
-            String url = urlBuilder.build().toString();
-            Request req = new Request.Builder().url(url).post(RequestBody.create(MediaType.parse("application/json"), json)).build();
-
-            client.newCall(req).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {  // can't receive any response from server
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(MainActivity.this, "server failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    /* response */
-                    final String res = response.body().string();
-
-                    Gson gson = new GsonBuilder().create();
-                    final LoginResponse data = gson.fromJson(res, LoginResponse.class);
-
-                    if (data.getStatus().equals("ok")) {
+            new RestAPICaller().Post(
+                "https://api.dokkang.tk/auth",
+                payload,
+                new RestAPICaller.ApiCallback<LoginResponse>(
+                    MainActivity.this,
+                    LoginResponse.class,
+                    res -> {
                         String message = "Login success";
 
                         MainActivity.this.runOnUiThread(new Runnable() {
@@ -94,22 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(MainActivity.this, MyPage.class);
                         /*  delivery */
-                        intent.putExtra("token", data.getToken());
-                        intent.putExtra("user_id", data.getUser_id());
+                        intent.putExtra("token", res.getToken());
+                        intent.putExtra("user_id", res.getUser_id());
                         startActivity(intent);
                         finish();
-                    } else {
-                        String message = "Login failed";
-
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
-                }
-            });
+                )
+            );
         });
 
         /* signup button */
