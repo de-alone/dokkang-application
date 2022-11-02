@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.EditSubjectListViewAdapter;
@@ -54,9 +55,8 @@ public class SubjectEdit extends AppCompatActivity {
         mypage_intent.putExtra("token", token);
         mypage_intent.putExtra("user_id", user_id);
 
-
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
-        new RestAPICaller(token).Get("https://api.dokkang.tk/lectures",
+        new RestAPICaller(token).Get(Constant.SERVER_BASE_URI + "/lectures",
             new RestAPICaller.ApiCallback<LectureResponse>(
                 SubjectEdit.this,
                 LectureResponse.class,
@@ -95,7 +95,7 @@ public class SubjectEdit extends AppCompatActivity {
             Gson gson = new Gson();
             String payload = gson.toJson(Map.of("lecture_ids", checked_lecture_ids));
 
-            new RestAPICaller(token).Put("https://api.dokkang.tk/user/" + user_id + "/lectures",
+            new RestAPICaller(token).Put(Constant.SERVER_BASE_URI + "/user/" + user_id + "/lectures",
                 payload,
                 new RestAPICaller.ApiCallback<Map>(
                     SubjectEdit.this,

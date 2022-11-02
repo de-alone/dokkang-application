@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.SignUpRequest;
@@ -71,7 +72,7 @@ public class SignUp extends AppCompatActivity {
                 Gson gson = new Gson();
                 String json = gson.toJson(data, SignUpRequest.class);
 
-                new RestAPICaller().Post("https://api.dokkang.tk/user",
+                new RestAPICaller().Post(Constant.SERVER_BASE_URI + "/user",
                     json,
                     new RestAPICaller.ApiCallback<SignUpResponse>(
                         SignUp.this,
