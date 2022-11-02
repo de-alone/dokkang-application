@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.skku.cs.dokkang.data_models.MySubject;
 
-public class LectureDataModel {
+public class LectureResponse {
     private String status;
     private List<MySubject> lectures;
 

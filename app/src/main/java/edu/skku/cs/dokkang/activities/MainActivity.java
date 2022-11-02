@@ -15,8 +15,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import edu.skku.cs.dokkang.R;
-import edu.skku.cs.dokkang.data_models.response.LoginDataModel;
-import edu.skku.cs.dokkang.data_models.response.LoginResponseDataModel;
+import edu.skku.cs.dokkang.data_models.request.LoginRequest;
+import edu.skku.cs.dokkang.data_models.response.LoginResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
 
-            LoginDataModel data = new LoginDataModel();
+            LoginRequest data = new LoginRequest();
             data.setUsername(id);
             data.setPassword(pw);
 
             Gson gson = new Gson();
-            String json = gson.toJson(data, LoginDataModel.class);
+            String json = gson.toJson(data, LoginRequest.class);
 
             HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/auth").newBuilder();
             String url = urlBuilder.build().toString();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     final String res = response.body().string();
 
                     Gson gson = new GsonBuilder().create();
-                    final LoginResponseDataModel data = gson.fromJson(res, LoginResponseDataModel.class);
+                    final LoginResponse data = gson.fromJson(res, LoginResponse.class);
 
                     if (data.getStatus().equals("ok")) {
                         String message = "Login success";

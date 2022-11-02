@@ -14,8 +14,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import edu.skku.cs.dokkang.R;
-import edu.skku.cs.dokkang.data_models.response.SignUpDataModel;
-import edu.skku.cs.dokkang.data_models.response.SignUpResponseDataModel;
+import edu.skku.cs.dokkang.data_models.request.SignUpRequest;
+import edu.skku.cs.dokkang.data_models.response.SignUpResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -64,13 +64,13 @@ public class SignUp extends AppCompatActivity {
             } else {
                 OkHttpClient client = new OkHttpClient();
 
-                SignUpDataModel data = new SignUpDataModel();
+                SignUpRequest data = new SignUpRequest();
                 data.setUsername(id);
                 data.setEmail(email);
                 data.setPassword(pw);
 
                 Gson gson = new Gson();
-                String json = gson.toJson(data, SignUpDataModel.class);
+                String json = gson.toJson(data, SignUpRequest.class);
 
                 HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user").newBuilder();
                 String url = urlBuilder.build().toString();
@@ -94,7 +94,7 @@ public class SignUp extends AppCompatActivity {
                         final String res = response.body().string();
 
                         Gson gson = new GsonBuilder().create();
-                        final SignUpResponseDataModel data = gson.fromJson(res, SignUpResponseDataModel.class);
+                        final SignUpResponse data = gson.fromJson(res, SignUpResponse.class);
 
                         if (data.getStatus().equals("User registered successfully!")) {
                             SignUp.this.runOnUiThread(new Runnable() {
