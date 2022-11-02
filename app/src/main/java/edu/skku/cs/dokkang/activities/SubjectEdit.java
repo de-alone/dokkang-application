@@ -1,7 +1,4 @@
-package edu.skku.cs.dokkang;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package edu.skku.cs.dokkang.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +6,9 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.adapters.EditSubjectListViewAdapter;
+import edu.skku.cs.dokkang.data_models.MySubject;
+import edu.skku.cs.dokkang.data_models.response.LectureDataModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -40,7 +44,7 @@ public class SubjectEdit extends AppCompatActivity {
 
         Intent intent = getIntent();
         String token = intent.getStringExtra("token");
-        long user_id = intent.getLongExtra("user_id",0);
+        long user_id = intent.getLongExtra("user_id", 0);
         List<String> checked_lecture_nos = intent.getStringArrayListExtra("checked_lecture_no");
 
         Button confirm_btn = findViewById(R.id.confirmButton);
@@ -105,8 +109,8 @@ public class SubjectEdit extends AppCompatActivity {
             /*items 안의 checked 확인해서 check된 과목들을 서버에 등록 요청보냄*/
             List<Integer> checked_lecture_ids = new ArrayList<>();
 
-            for(MySubject item : items) {
-                if(item.getChecked()) {
+            for (MySubject item : items) {
+                if (item.getChecked()) {
                     checked_lecture_ids.add(item.getId());
                 }
             }
@@ -114,7 +118,7 @@ public class SubjectEdit extends AppCompatActivity {
             Gson gson = new Gson();
             String payload = gson.toJson(Map.of("lecture_ids", checked_lecture_ids));
 
-            HttpUrl.Builder updateUrlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/"+ user_id +"/lectures").newBuilder();
+            HttpUrl.Builder updateUrlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/" + user_id + "/lectures").newBuilder();
             String updateUrl = updateUrlBuilder.build().toString();
             Request updateRequest = new Request.Builder().url(updateUrl)
                     .addHeader("Authorization", "Bearer " + token)
@@ -155,7 +159,6 @@ public class SubjectEdit extends AppCompatActivity {
                     });
                 }
             });
-
 
 
         });

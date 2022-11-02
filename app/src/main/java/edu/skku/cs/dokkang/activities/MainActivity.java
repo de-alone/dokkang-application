@@ -1,20 +1,22 @@
-package edu.skku.cs.dokkang;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package edu.skku.cs.dokkang.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.data_models.response.LoginDataModel;
+import edu.skku.cs.dokkang.data_models.response.LoginResponseDataModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -96,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("user_id", data.getUser_id());
                         startActivity(intent);
                         finish();
-                    }
-                    else {
+                    } else {
                         String message = "Login failed";
 
                         MainActivity.this.runOnUiThread(new Runnable() {

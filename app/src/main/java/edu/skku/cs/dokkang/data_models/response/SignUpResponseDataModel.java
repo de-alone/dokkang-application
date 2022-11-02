@@ -1,4 +1,4 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.data_models.response;
 
 public class SignUpResponseDataModel {
     private String status;

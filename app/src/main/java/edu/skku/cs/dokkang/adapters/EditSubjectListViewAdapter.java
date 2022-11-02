@@ -1,4 +1,4 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import java.util.List;
+
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.data_models.MySubject;
 
 public class EditSubjectListViewAdapter extends BaseAdapter {
 
-    private List<MySubject> item;
-    private Context mContext;
+    private final List<MySubject> item;
+    private final Context mContext;
 
 
     public EditSubjectListViewAdapter(List<MySubject> item, Context mContext) {

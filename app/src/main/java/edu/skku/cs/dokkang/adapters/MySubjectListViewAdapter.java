@@ -1,4 +1,4 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,59 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/*lecture information*/
-class MySubject {
-    private String name;
-    private String professor;
-    private int id;
-    private String no;
-    private boolean checked = false;
-
-    public String getName() {
-        return name;
-    }
-
-    public String getProfessor() {
-        return professor;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public boolean getChecked() {return checked; }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setProfessor(String professor) {
-        this.professor = professor;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public void setChecked(boolean checked) {this.checked = checked; }
-}
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.activities.CommunityMain;
+import edu.skku.cs.dokkang.activities.StudyGroupMain;
+import edu.skku.cs.dokkang.data_models.MySubject;
 
 
 public class MySubjectListViewAdapter extends BaseAdapter {
 
-    private List<MySubject> item;
-    private Context mContext;
+    private final List<MySubject> item;
+    private final Context mContext;
 
 
     public MySubjectListViewAdapter(List<MySubject> item, Context mContext) {
@@ -100,7 +59,7 @@ public class MySubjectListViewAdapter extends BaseAdapter {
 
         /* go to the community activity*/
         community_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(viewGroup.getContext(), CommunityMain.class );
+            Intent intent = new Intent(viewGroup.getContext(), CommunityMain.class);
             intent.putExtra("lecture", item.get(i).getName());
             intent.putExtra("professor", item.get(i).getProfessor());
             intent.putExtra("lecture_id", item.get(i).getId());
@@ -110,7 +69,7 @@ public class MySubjectListViewAdapter extends BaseAdapter {
 
         /* go to the study group activity*/
         study_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(viewGroup.getContext(), StudyGroupMain.class );
+            Intent intent = new Intent(viewGroup.getContext(), StudyGroupMain.class);
             intent.putExtra("lecture", item.get(i).getName());
             intent.putExtra("professor", item.get(i).getProfessor());
             intent.putExtra("lecture_id", item.get(i).getId());

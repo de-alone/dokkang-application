@@ -1,8 +1,10 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.activities;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import edu.skku.cs.dokkang.R;
 
 public class CommunityMain extends AppCompatActivity {
 
