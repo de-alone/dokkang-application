@@ -1,4 +1,4 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.data_models.response;
 
 public class LoginResponseDataModel {
     private String status;
@@ -21,7 +21,11 @@ public class LoginResponseDataModel {
         this.token = token;
     }
 
-    public long getUser_id() { return user_id; }
+    public long getUser_id() {
+        return user_id;
+    }
 
-    public void setUser_id(long user_id) { this.user_id = user_id; }
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
 }

@@ -1,19 +1,21 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.data_models.response.SignUpDataModel;
+import edu.skku.cs.dokkang.data_models.response.SignUpResponseDataModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -55,13 +57,11 @@ public class SignUp extends AppCompatActivity {
             2. length of the password < 6
              */
 
-            if(id.length() == 0 || pw.length() == 0 || email.length() == 0 || nickname.length() == 0 || department.length() == 0) {
+            if (id.length() == 0 || pw.length() == 0 || email.length() == 0 || nickname.length() == 0 || department.length() == 0) {
                 Toast.makeText(SignUp.this, "Please fill in the blank", Toast.LENGTH_SHORT).show();
-            }
-            else if(pw.length() < 6) {
+            } else if (pw.length() < 6) {
                 Toast.makeText(SignUp.this, "Please enter a password of at least six digits", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 OkHttpClient client = new OkHttpClient();
 
                 SignUpDataModel data = new SignUpDataModel();

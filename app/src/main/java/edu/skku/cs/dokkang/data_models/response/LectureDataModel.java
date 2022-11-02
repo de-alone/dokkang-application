@@ -1,6 +1,8 @@
-package edu.skku.cs.dokkang;
+package edu.skku.cs.dokkang.data_models.response;
 
 import java.util.List;
+
+import edu.skku.cs.dokkang.data_models.MySubject;
 
 public class LectureDataModel {
     private String status;

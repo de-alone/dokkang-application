@@ -1,15 +1,14 @@
-package edu.skku.cs.dokkang;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package edu.skku.cs.dokkang.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,8 +16,11 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.adapters.MySubjectListViewAdapter;
+import edu.skku.cs.dokkang.data_models.MySubject;
+import edu.skku.cs.dokkang.data_models.response.LectureDataModel;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -47,7 +49,7 @@ public class MyPage extends AppCompatActivity {
 
         Intent intent = getIntent();
         String token = intent.getStringExtra("token");
-        long user_id = intent.getLongExtra("user_id",0);
+        long user_id = intent.getLongExtra("user_id", 0);
 
         MyPage_activity = MyPage.this;
 
@@ -55,7 +57,7 @@ public class MyPage extends AppCompatActivity {
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
         OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/"+user_id+"/lectures").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/" + user_id + "/lectures").newBuilder();
         String url = urlBuilder.build().toString();
         Request req = new Request.Builder().url(url)
                 .addHeader("Authorization", "Bearer " + token)
