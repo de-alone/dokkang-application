@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.EditSubjectListViewAdapter;
 import edu.skku.cs.dokkang.data_models.MySubject;
 import edu.skku.cs.dokkang.data_models.response.LectureResponse;
@@ -55,43 +56,19 @@ public class SubjectEdit extends AppCompatActivity {
 
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
-        OkHttpClient client = new OkHttpClient();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.dokkang.tk/lectures").newBuilder();
-        String url = urlBuilder.build().toString();
-        Request req = new Request.Builder().url(url)
-                .addHeader("Authorization", "Bearer " + token)
-                .get().build();
-
-        client.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { // can't receive any response from server
-                SubjectEdit.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(SubjectEdit.this, "failed to get all lectures", Toast.LENGTH_SHORT).show();
+        new RestAPICaller(token).Get("https://api.dokkang.tk/lectures",
+            new RestAPICaller.ApiCallback<LectureResponse>(
+                SubjectEdit.this,
+                LectureResponse.class,
+                data -> {
+                    items = new ArrayList<>();
+                    for (MySubject lecture : data.getLectures()) {
+                        if (checked_lecture_nos.contains(lecture.getNo())) {
+                            lecture.setChecked(true);
+                        }
+                        items.add(lecture);
                     }
-                });
-                e.printStackTrace();
-            }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                /* response */
-                final String res = response.body().string();
-
-                Gson gson = new GsonBuilder().create();
-                final LectureResponse data = gson.fromJson(res, LectureResponse.class);
-
-                items = new ArrayList<>();
-                for (MySubject lecture : data.getLectures()) {
-                    if (checked_lecture_nos.contains(lecture.getNo())) {
-                        lecture.setChecked(true);
-                    }
-                    items.add(lecture);
-                }
-
-                if (response.isSuccessful()) {
                     SubjectEdit.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -101,8 +78,8 @@ public class SubjectEdit extends AppCompatActivity {
                         }
                     });
                 }
-            }
-        });
+            )
+        );
 
         /*confirm button*/
         confirm_btn.setOnClickListener(view -> {
@@ -118,49 +95,27 @@ public class SubjectEdit extends AppCompatActivity {
             Gson gson = new Gson();
             String payload = gson.toJson(Map.of("lecture_ids", checked_lecture_ids));
 
-            HttpUrl.Builder updateUrlBuilder = HttpUrl.parse("https://api.dokkang.tk/user/" + user_id + "/lectures").newBuilder();
-            String updateUrl = updateUrlBuilder.build().toString();
-            Request updateRequest = new Request.Builder().url(updateUrl)
-                    .addHeader("Authorization", "Bearer " + token)
-                    .put(RequestBody.create(MediaType.parse("application/json"), payload)).build();
+            new RestAPICaller(token).Put("https://api.dokkang.tk/user/" + user_id + "/lectures",
+                payload,
+                new RestAPICaller.ApiCallback<Map>(
+                    SubjectEdit.this,
+                    Map.class,
+                    text -> {
+                        /* 이전에 실행한 MyPage activity와 현재 SubjectEdit activity를 종료하고 새로운 mypage activity를 실행*/
+                        MyPage mypage_activity = (MyPage) MyPage.MyPage_activity;
+                        mypage_activity.finish();
+                        startActivity(mypage_intent);
 
-            OkHttpClient updateClient = new OkHttpClient();
-
-            Log.d("DEBUG", updateRequest.toString());
-            updateClient.newCall(updateRequest).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) { // can't receive any response from server
-                    SubjectEdit.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(SubjectEdit.this, "failed to request updating selected lectures", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    SubjectEdit.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (response.isSuccessful()) {
-                                /* 이전에 실행한 MyPage activity와 현재 SubjectEdit activity를 종료하고 새로운 mypage activity를 실행*/
-                                MyPage mypage_activity = (MyPage) MyPage.MyPage_activity;
-                                mypage_activity.finish();
-                                startActivity(mypage_intent);
+                        SubjectEdit.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
                                 Toast.makeText(SubjectEdit.this, "updated selected lectures!", Toast.LENGTH_SHORT).show();
-                                finish();
-
-                            } else {
-                                Toast.makeText(SubjectEdit.this, "failed to update selected lectures with " + response.body().toString(), Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
-                }
-            });
-
-
+                        });
+                        finish();
+                    }
+                )
+            );
         });
     }
 }
