@@ -5,15 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +17,6 @@ import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.MySubjectListViewAdapter;
 import edu.skku.cs.dokkang.data_models.MySubject;
 import edu.skku.cs.dokkang.data_models.response.LectureResponse;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MyPage extends AppCompatActivity {
 
@@ -56,7 +44,7 @@ public class MyPage extends AppCompatActivity {
         MyPage_activity = MyPage.this;
 
         /* 서버에 강의 목록 요청해서 items arraylist에 삽입*/
-        new RestAPICaller(token).Get(Constant.SERVER_BASE_URI + "/user/" + user_id + "/lectures",
+        new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/user/" + user_id + "/lectures",
             new RestAPICaller.ApiCallback<LectureResponse>(
                     MyPage.this,
                     LectureResponse.class,
