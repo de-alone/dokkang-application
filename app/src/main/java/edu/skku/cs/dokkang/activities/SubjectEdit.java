@@ -21,7 +21,7 @@ import java.util.Map;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.adapters.EditSubjectListViewAdapter;
 import edu.skku.cs.dokkang.data_models.MySubject;
-import edu.skku.cs.dokkang.data_models.response.LectureDataModel;
+import edu.skku.cs.dokkang.data_models.response.LectureResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -81,7 +81,7 @@ public class SubjectEdit extends AppCompatActivity {
                 final String res = response.body().string();
 
                 Gson gson = new GsonBuilder().create();
-                final LectureDataModel data = gson.fromJson(res, LectureDataModel.class);
+                final LectureResponse data = gson.fromJson(res, LectureResponse.class);
 
                 items = new ArrayList<>();
                 for (MySubject lecture : data.getLectures()) {

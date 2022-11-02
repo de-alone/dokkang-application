@@ -11,41 +11,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
-            android:name=".PersonalInfo"
+            android:name=".activities.PersonalInfo"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StudyGroupMain"
+            android:name=".activities.StudyGroupMain"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CommunityMain"
+            android:name=".activities.CommunityMain"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SubjectEdit"
+            android:name=".activities.SubjectEdit"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MyPage"
+            android:name=".activities.MyPage"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".activities.SignUp"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

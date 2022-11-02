@@ -1,6 +1,6 @@
 package edu.skku.cs.dokkang.data_models.response;
 
-public class LoginResponseDataModel {
+public class LoginResponse {
     private String status;
     private long user_id;
     private String token;

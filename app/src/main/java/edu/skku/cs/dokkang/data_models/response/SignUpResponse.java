@@ -1,6 +1,6 @@
 package edu.skku.cs.dokkang.data_models.response;
 
-public class SignUpResponseDataModel {
+public class SignUpResponse {
     private String status;
 
     public String getStatus() {
