@@ -1,7 +1,10 @@
 package edu.skku.cs.dokkang.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,13 +18,30 @@ import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.request.LoginRequest;
 import edu.skku.cs.dokkang.data_models.response.LoginResponse;
+import edu.skku.cs.dokkang.utils.Credential;
 import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Credential auth = new Credential(this);
+
         super.onCreate(savedInstanceState);
+
+        Pair<Long, String> loadedCredentials = auth.loadCredentials();
+        if (loadedCredentials != null) {
+            Long loadedUserId = loadedCredentials.first;
+            String loadedToken = loadedCredentials.second;
+
+            finish();
+            Intent mypage_intent = new Intent(MainActivity.this, MyPage.class);
+            mypage_intent.putExtra("user_id", loadedUserId);
+            mypage_intent.putExtra("token", loadedToken);
+            startActivity(mypage_intent);
+        }
+
+
         setContentView(R.layout.activity_main);
 
         /* login info: ID, Password */
@@ -65,10 +85,15 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
+                        Long userId = res.getUser_id();
+                        String token = res.getToken();
+
+                        auth.saveCredentials(userId, token);
+
                         Intent intent = new Intent(MainActivity.this, MyPage.class);
                         /*  delivery */
-                        intent.putExtra("token", res.getToken());
-                        intent.putExtra("user_id", res.getUser_id());
+                        intent.putExtra("token", token);
+                        intent.putExtra("user_id", userId);
                         startActivity(intent);
                         finish();
                     }

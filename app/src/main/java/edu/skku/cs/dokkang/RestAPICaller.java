@@ -77,9 +77,9 @@ public class RestAPICaller {
     }
 
     public static final class ApiCallback<T> implements Callback {
-        private Activity activity;
-        private Class<T> responseTypeClass;
-        private Consumer<T> successConsumer;
+        private final Activity activity;
+        private final Class<T> responseTypeClass;
+        private final Consumer<T> successConsumer;
         private Consumer<T> failureConsumer = null;
 
         public ApiCallback (Activity activity, Class<T> responseTypeClass, Consumer<T> successConsumer) {
