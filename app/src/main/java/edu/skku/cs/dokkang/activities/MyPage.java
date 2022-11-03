@@ -85,5 +85,12 @@ public class MyPage extends AppCompatActivity {
             pinfo_intent.putExtra("token", token);
             startActivity(pinfo_intent);
         });
+
+        /* logout */
+        logout_btn.setOnClickListener(view -> {
+            MyPage.this.finish();
+            Intent main_intent = new Intent(MyPage.this, MainActivity.class);
+            startActivity(main_intent);
+        });
     }
 }
