@@ -1,6 +1,7 @@
 package edu.skku.cs.dokkang.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -76,7 +77,14 @@ public class SignUp extends AppCompatActivity {
                                     Toast.makeText(SignUp.this, res.getStatus(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            finish();
+                            finish();},
+                        fail -> {
+                            SignUp.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SignUp.this, fail.getStatus(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     )
                 );
