@@ -86,8 +86,4 @@ public class MyPage extends AppCompatActivity {
             startActivity(pinfo_intent);
         });
     }
-
-    private void getAllLectures() {
-
-    }
 }
