@@ -15,23 +15,27 @@ import edu.skku.cs.dokkang.data_models.MySubject;
 
 public class EditSubjectListViewAdapter extends BaseAdapter {
 
-    private final List<MySubject> item;
+    private List<MySubject> items;
     private final Context mContext;
 
 
-    public EditSubjectListViewAdapter(List<MySubject> item, Context mContext) {
-        this.item = item;
+    public EditSubjectListViewAdapter(List<MySubject> items, Context mContext) {
+        this.items = items;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return item.size();
+        return items.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return item.get(i);
+    public MySubject getItem(int i) {
+        return items.get(i);
+    }
+
+    public void setItems(List<MySubject> items) {
+        this.items = items;
     }
 
     @Override
@@ -51,17 +55,19 @@ public class EditSubjectListViewAdapter extends BaseAdapter {
         TextView professor = view.findViewById(R.id.ProfessorName_text);
         CheckBox checkBox = view.findViewById(R.id.checkBox);
 
+        MySubject item = getItem(i);
+
         /*show lecture info */
-        lecture_name.setText(item.get(i).getName());
-        lecture_no.setText(item.get(i).getNo());
-        professor.setText(item.get(i).getProfessor());
+        lecture_name.setText(item.getName());
+        lecture_no.setText(item.getNo());
+        professor.setText(item.getProfessor());
 
         /*if checked before, then check the box*/
-        checkBox.setChecked(item.get(i).getChecked());
+        checkBox.setChecked(item.getChecked());
 
         /*check lectures */
         checkBox.setOnClickListener(v -> {
-            item.get(i).setChecked(checkBox.isChecked());
+            item.setChecked(checkBox.isChecked());
         });
 
         return view;

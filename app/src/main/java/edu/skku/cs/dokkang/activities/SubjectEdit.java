@@ -3,6 +3,8 @@ package edu.skku.cs.dokkang.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
@@ -37,7 +40,6 @@ public class SubjectEdit extends AppCompatActivity {
         long user_id = intent.getLongExtra("user_id", 0);
         List<String> checked_lecture_nos = intent.getStringArrayListExtra("checked_lecture_no");
 
-        Button confirm_btn = findViewById(R.id.confirmButton);
         listView = findViewById(R.id.subjectListView);
         Intent mypage_intent = new Intent(SubjectEdit.this, MyPage.class);
         mypage_intent.putExtra("token", token);
@@ -70,6 +72,7 @@ public class SubjectEdit extends AppCompatActivity {
         );
 
         /*confirm button*/
+        Button confirm_btn = findViewById(R.id.confirmButton);
         confirm_btn.setOnClickListener(view -> {
             /*items 안의 checked 확인해서 check된 과목들을 서버에 등록 요청보냄*/
             List<Integer> checked_lecture_ids = new ArrayList<>();
@@ -105,5 +108,21 @@ public class SubjectEdit extends AppCompatActivity {
                 )
             );
         });
+
+        /* search button */
+        ImageButton search_btn = findViewById(R.id.searchButton);
+        search_btn.setOnClickListener(view -> {
+            EditText search_bar = findViewById(R.id.search_bar);
+            String keyword = search_bar.getText().toString();
+            listViewAdapter.setItems(searchLecture(keyword));
+            listViewAdapter.notifyDataSetChanged();
+        });
+    }
+
+    public List<MySubject> searchLecture(String keyword) {
+        return items.stream().filter(item -> item.getName().contains(keyword)
+                || item.getNo().contains(keyword)
+                || item.getProfessor().contains(keyword)
+        ).collect(Collectors.toList());
     }
 }
