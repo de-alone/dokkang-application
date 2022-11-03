@@ -17,6 +17,7 @@ import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.MySubjectListViewAdapter;
 import edu.skku.cs.dokkang.data_models.MySubject;
 import edu.skku.cs.dokkang.data_models.response.LectureResponse;
+import edu.skku.cs.dokkang.utils.Credential;
 
 public class MyPage extends AppCompatActivity {
 
@@ -88,6 +89,8 @@ public class MyPage extends AppCompatActivity {
 
         /* logout */
         logout_btn.setOnClickListener(view -> {
+            new Credential(this).resetCredentials();
+
             MyPage.this.finish();
             Intent main_intent = new Intent(MyPage.this, MainActivity.class);
             startActivity(main_intent);
