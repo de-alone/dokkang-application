@@ -3,9 +3,12 @@ package edu.skku.cs.dokkang.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,17 @@ public class CommunityMain extends AppCompatActivity {
         Intent intent = getIntent();
         long lecture_id = intent.getLongExtra("lecture_id", 0);
 
+        FloatingActionButton add_btn = findViewById(R.id.addPostButton);
         listView = findViewById(R.id.postListView);
 
         Community_activity = CommunityMain.this;
 
-        listViewAdapter = new LecturePostListViewAdapter(null, getApplicationContext());
-        listView.setAdapter(listViewAdapter);
+        //listViewAdapter = new LecturePostListViewAdapter(null, getApplicationContext());
+        //listView.setAdapter(listViewAdapter);
+
+        add_btn.setOnClickListener(view -> {
+            Intent add_intent = new Intent(Community_activity, NewPost.class);
+            startActivity(add_intent);
+        });
     }
 }
