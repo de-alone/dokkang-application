@@ -26,7 +26,10 @@ jobs:
       run: ./gradlew test
 
     - name: Build
-      run: ./gradlew build
+      run: |
+        echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 -d > ./keystore.jks
+        ./gradlew build -P SIGNED_STORE_FILE="../keystore.jks" -P SIGNED_STORE_PASSWORD="${{ secrets.SIGNED_STORE_PASSWORD }}" -P SIGNED_KEY_ALIAS="${{ secrets.SIGNED_KEY_ALIAS }}" -P SIGNED_KEY_PASSWORD="${{ secrets.SIGNED_KEY_PASSWORD }}"
+        ./gradlew bundleRelease -P SIGNED_STORE_FILE="../keystore.jks" -P SIGNED_STORE_PASSWORD="${{ secrets.SIGNED_STORE_PASSWORD }}" -P SIGNED_KEY_ALIAS="${{ secrets.SIGNED_KEY_ALIAS }}" -P SIGNED_KEY_PASSWORD="${{ secrets.SIGNED_KEY_PASSWORD }}"
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
@@ -34,3 +37,10 @@ jobs:
       with:
         name: dokkang-application-apk
         path: app/build/outputs/apk/
+
+    - name: Upload Bundle
+      uses: actions/upload-artifact@v3
+      if: github.ref_name == 'master'
+      with:
+        name: dokkang-application-bundle
+        path: app/build/outputs/bundle/
