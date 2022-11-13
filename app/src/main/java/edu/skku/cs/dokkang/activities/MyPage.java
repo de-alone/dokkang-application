@@ -71,7 +71,6 @@ public class MyPage extends AppCompatActivity {
                                     se_intent.putExtra("token", token);
                                     se_intent.putExtra("checked_lecture_no", check_lecture_nos);
                                     startActivity(se_intent);
-
                                 });
                             }
                         });
