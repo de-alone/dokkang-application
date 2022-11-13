@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import okhttp3.Call;
@@ -32,9 +33,20 @@ public class RestAPICaller {
     }
 
     public void get(String uri, Callback callback) {
+        get(uri, null, callback);
+    }
+
+    public void get(String uri, Map<String, String> queries, Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(uri).newBuilder();
+
+        if (queries != null) {
+            for (Map.Entry<String, String> param: queries.entrySet()) {
+                urlBuilder.addQueryParameter(param.getKey(), param.getValue());
+            }
+        }
+
         String url = urlBuilder.build().toString();
         Request.Builder requestBuilder = new Request.Builder().url(url);
 
