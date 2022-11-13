@@ -57,6 +57,8 @@ public class CommunityMain extends AppCompatActivity {
 
         add_btn.setOnClickListener(view -> {
             Intent add_intent = new Intent(Community_activity, NewPost.class);
+            add_intent.putExtra("lecture_id", lecture_id);
+            add_intent.putExtra("lecture", lecture);
             startActivity(add_intent);
         });
 
