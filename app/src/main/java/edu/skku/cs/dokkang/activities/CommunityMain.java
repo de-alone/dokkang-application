@@ -33,6 +33,7 @@ public class CommunityMain extends AppCompatActivity {
     private LecturePostListViewAdapter listViewAdapter;
     private Boolean endOfPost = false;
     public String before = null;
+    private static final String postFetchLimit = "10";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class CommunityMain extends AppCompatActivity {
 
                 String URI = Constant.SERVER_BASE_URI + "/lecture/" + String.valueOf(lecture_id) + "/posts";
                 Map<String, String> queries = new HashMap<>();
-                queries.put("limit", "10");
+                queries.put("limit", postFetchLimit);
                 if (before != null) {
                     queries.put("before", before);
                 }
