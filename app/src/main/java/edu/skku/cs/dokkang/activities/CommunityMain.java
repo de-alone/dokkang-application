@@ -34,6 +34,7 @@ public class CommunityMain extends AppCompatActivity {
     private Boolean endOfPost = false;
     public String before = null;
     private static final String postFetchLimit = "10";
+    private static Boolean updating = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +67,10 @@ public class CommunityMain extends AppCompatActivity {
             @Override
             public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 // 스크롤이 최하단이 아니거나 이미 모든 글을 불러왔으면 종료
-                if (endOfPost || view.canScrollVertically(1)) {
+                if (endOfPost || CommunityMain.updating || view.canScrollVertically(1)) {
                     return;
                 }
+                updating = true;
 
                 Pair<Long, String> credential = new Credential(CommunityMain.this).loadCredentials();
                 Long user_id = credential.first;
@@ -96,6 +98,8 @@ public class CommunityMain extends AppCompatActivity {
                                 if (posts.size() == 0) {
                                     endOfPost = true;
                                 }
+
+                                updating = false;
                             }
                 ));
             }
