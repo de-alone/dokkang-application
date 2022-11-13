@@ -19,23 +19,23 @@ import edu.skku.cs.dokkang.data_models.MySubject;
 
 public class MySubjectListViewAdapter extends BaseAdapter {
 
-    private final List<MySubject> item;
+    private final List<MySubject> items;
     private final Context mContext;
 
 
-    public MySubjectListViewAdapter(List<MySubject> item, Context mContext) {
-        this.item = item;
+    public MySubjectListViewAdapter(List<MySubject> items, Context mContext) {
+        this.items = items;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return item.size();
+        return items.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return item.get(i);
+    public MySubject getItem(int i) {
+        return items.get(i);
     }
 
     @Override
@@ -54,26 +54,28 @@ public class MySubjectListViewAdapter extends BaseAdapter {
         Button community_btn = view.findViewById(R.id.communitybutton);
         Button study_btn = view.findViewById(R.id.studybutton);
 
+        MySubject item = getItem(i);
+
         /* set Textview as lecture name */
-        lecture_name.setText(item.get(i).getName());
+        lecture_name.setText(item.getName());
 
         /* go to the community activity*/
         community_btn.setOnClickListener(v -> {
             Intent intent = new Intent(viewGroup.getContext(), CommunityMain.class);
-            intent.putExtra("lecture", item.get(i).getName());
-            intent.putExtra("professor", item.get(i).getProfessor());
-            intent.putExtra("lecture_id", item.get(i).getId());
-            intent.putExtra("lecture_no", item.get(i).getNo());
+            intent.putExtra("lecture", item.getName());
+            intent.putExtra("professor", item.getProfessor());
+            intent.putExtra("lecture_id", item.getId());
+            intent.putExtra("lecture_no", item.getNo());
             viewGroup.getContext().startActivity(intent);
         });
 
         /* go to the study group activity*/
         study_btn.setOnClickListener(v -> {
             Intent intent = new Intent(viewGroup.getContext(), StudyGroupMain.class);
-            intent.putExtra("lecture", item.get(i).getName());
-            intent.putExtra("professor", item.get(i).getProfessor());
-            intent.putExtra("lecture_id", item.get(i).getId());
-            intent.putExtra("lecture_no", item.get(i).getNo());
+            intent.putExtra("lecture", item.getName());
+            intent.putExtra("professor", item.getProfessor());
+            intent.putExtra("lecture_id", item.getId());
+            intent.putExtra("lecture_no", item.getNo());
             viewGroup.getContext().startActivity(intent);
         });
 
