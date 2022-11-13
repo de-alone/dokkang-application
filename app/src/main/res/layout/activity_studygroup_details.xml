@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/sgtitle"
+        android:id="@+id/postLectureNameView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#004907"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Liketextview"
+        android:id="@+id/post_liketextview"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -30,11 +30,11 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/likebutton"
+        app:layout_constraintRight_toLeftOf="@id/post_likebutton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/likebutton"
+        android:id="@+id/post_likebutton"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -44,11 +44,11 @@
         android:text="Like"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/Liketextview"
+        app:layout_constraintLeft_toRightOf="@id/post_liketextview"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/sg_commenttextview"
+        android:id="@+id/postCommenttextview"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
@@ -58,16 +58,16 @@
         android:text="Comments: 0"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/likebutton"
+        app:layout_constraintLeft_toRightOf="@id/post_likebutton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/sg_commentListView"
+        android:id="@+id/postCommentListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/sgCommentEditText"
-        app:layout_constraintTop_toBottomOf="@id/likebutton"
+        app:layout_constraintBottom_toTopOf="@id/postCommentEditText"
+        app:layout_constraintTop_toBottomOf="@id/post_likebutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
@@ -75,7 +75,7 @@
         />
 
     <EditText
-        android:id="@+id/sgCommentEditText"
+        android:id="@+id/postCommentEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
@@ -88,10 +88,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/sg_send_button" />
+        app:layout_constraintRight_toLeftOf="@id/post_send_button" />
 
     <Button
-        android:id="@+id/sg_send_button"
+        android:id="@+id/post_send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send"
@@ -100,25 +100,25 @@
         android:layout_marginBottom="20dp"/>
 
     <TextView
-        android:id="@+id/sg_name_textView"
+        android:id="@+id/post_name_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="TextView"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sgtitle" />
+        app:layout_constraintTop_toBottomOf="@id/postLectureNameView" />
 
     <TextView
-        android:id="@+id/sg_time_textView"
+        android:id="@+id/post_time_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:text="TextView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sgtitle" />
+        app:layout_constraintTop_toBottomOf="@id/postLectureNameView" />
 
     <TextView
-        android:id="@+id/sg_title_textView"
+        android:id="@+id/post_title_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -129,10 +129,10 @@
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sg_name_textView" />
+        app:layout_constraintTop_toBottomOf="@id/post_name_textView" />
 
     <TextView
-        android:id="@+id/sg_content_textView"
+        android:id="@+id/post_content_textView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
@@ -144,7 +144,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sg_title_textView" />
+        app:layout_constraintTop_toBottomOf="@id/post_title_textView" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -154,7 +154,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/sg_commenttextview"
+        app:layout_constraintBottom_toTopOf="@+id/postCommenttextview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
