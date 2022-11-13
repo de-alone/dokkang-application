@@ -20,16 +20,16 @@ public class StudyGroupDetails extends AppCompatActivity {
         StudyGroupPost post = (StudyGroupPost) intent.getSerializableExtra("studygroup");
         String lecture = intent.getStringExtra("lecture");
 
-        TextView sg_lecture = findViewById(R.id.sgtitle);
+        TextView sg_lecture = findViewById(R.id.postLectureNameView);
         sg_lecture.setText(lecture);
 
-        TextView title = findViewById(R.id.sg_title_textView);
-        TextView content = findViewById(R.id.sg_content_textView);
+        TextView title = findViewById(R.id.post_title_textView);
+        TextView content = findViewById(R.id.post_content_textView);
         TextView member = findViewById(R.id.memberTextview);
         TextView date = findViewById(R.id.dateTextview);
         TextView place = findViewById(R.id.placeTextview);
-        TextView like = findViewById(R.id.Liketextview);
-        TextView comment = findViewById(R.id.sg_commenttextview);
+        TextView like = findViewById(R.id.post_liketextview);
+        TextView comment = findViewById(R.id.postCommenttextview);
 
         title.setText(post.getTitle());
         content.setText(post.getContent());

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +25,12 @@ import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.LecturePostListViewAdapter;
+import edu.skku.cs.dokkang.adapters.MySubjectListViewAdapter;
 import edu.skku.cs.dokkang.data_models.LecturePost;
+import edu.skku.cs.dokkang.data_models.MySubject;
+import edu.skku.cs.dokkang.data_models.StudyGroupPost;
+import edu.skku.cs.dokkang.data_models.response.LectureResponse;
+import edu.skku.cs.dokkang.data_models.response.PostDetailResponse;
 import edu.skku.cs.dokkang.data_models.response.PostListResponse;
 import edu.skku.cs.dokkang.utils.Credential;
 
@@ -102,6 +110,29 @@ public class CommunityMain extends AppCompatActivity {
                                 updating = false;
                             }
                 ));
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final LecturePost item = (LecturePost) listViewAdapter.getItem(i);
+
+                Pair<Long, String> credential = new Credential(CommunityMain.this).loadCredentials();
+                String token = credential.second;
+
+                new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + item.getId(),
+                        new RestAPICaller.ApiCallback<PostDetailResponse>(
+                                CommunityMain.this,
+                                PostDetailResponse.class,
+                                data -> {
+                                    Intent pd_intent = new Intent(CommunityMain.this, PostDetails.class);
+                                    pd_intent.putExtra("post", (Serializable) data);
+                                    pd_intent.putExtra("lecture", lecture);
+                                    startActivity(pd_intent);
+                                }
+                        )
+                );
             }
         });
     }
