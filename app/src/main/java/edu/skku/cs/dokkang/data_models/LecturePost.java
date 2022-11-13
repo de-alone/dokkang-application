@@ -6,6 +6,7 @@ public class LecturePost {
     private String title;
     private int num_likes;
     private int num_comments;
+    private String created_at;
 
     public long getId() {
         return id;
@@ -45,5 +46,13 @@ public class LecturePost {
 
     public void setNum_comments(int num_comments) {
         this.num_comments = num_comments;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }
