@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.skku.cs.dokkang.R;
@@ -15,22 +16,29 @@ import edu.skku.cs.dokkang.data_models.LecturePost;
 import edu.skku.cs.dokkang.data_models.MySubject;
 
 public class LecturePostListViewAdapter extends BaseAdapter {
-    private final List<LecturePost> item;
+    private List<LecturePost> items;
     private final Context mContext;
 
-    public LecturePostListViewAdapter(List<LecturePost> item, Context mContext) {
-        this.item = item;
+    public LecturePostListViewAdapter(List<LecturePost> items, Context mContext) {
+        this.items = items;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return item.size();
+        return items.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return item.get(i);
+    public LecturePost getItem(int i) {
+        return items.get(i);
+    }
+
+    public void addItems(List<LecturePost> newItems) {
+        List<LecturePost> items = new ArrayList<>();
+        items.addAll(this.items);
+        items.addAll(newItems);
+        this.items = items;
     }
 
     @Override
@@ -51,11 +59,11 @@ public class LecturePostListViewAdapter extends BaseAdapter {
         ImageView comment = view.findViewById(R.id.commentImage);
         TextView commentNum = view.findViewById(R.id.commentNum);
 
-        postTitle.setText(item.get(i).getTitle());
+        postTitle.setText(items.get(i).getTitle());
         like.setImageResource(R.drawable.like);
-        likedNum.setText(item.get(i).getNum_likes() + "");
+        likedNum.setText(items.get(i).getNum_likes() + "");
         comment.setImageResource(R.drawable.comment);
-        commentNum.setText(item.get(i).getNum_comments() + "");
+        commentNum.setText(items.get(i).getNum_comments() + "");
 
         return view;
     }

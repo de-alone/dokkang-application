@@ -75,7 +75,7 @@ public class SubjectEdit extends AppCompatActivity {
         Button confirm_btn = findViewById(R.id.confirmButton);
         confirm_btn.setOnClickListener(view -> {
             /*items 안의 checked 확인해서 check된 과목들을 서버에 등록 요청보냄*/
-            List<Integer> checked_lecture_ids = new ArrayList<>();
+            List<Long> checked_lecture_ids = new ArrayList<>();
 
             for (MySubject item : items) {
                 if (item.getChecked()) {
