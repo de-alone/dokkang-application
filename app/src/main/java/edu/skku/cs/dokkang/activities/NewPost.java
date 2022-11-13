@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.data_models.LecturePost;
 import edu.skku.cs.dokkang.data_models.request.NewPostRequest;
 import edu.skku.cs.dokkang.data_models.response.NewPostResponse;
+import edu.skku.cs.dokkang.data_models.response.PostDetailResponse;
 import edu.skku.cs.dokkang.data_models.response.PostListResponse;
 import edu.skku.cs.dokkang.utils.Credential;
 
@@ -61,8 +63,20 @@ public class NewPost extends AppCompatActivity {
                             NewPostResponse.class,
                             res -> {
                                 Long post_id = res.getPost_id();
-                                // TODO: 추후 해당 post_id를 이용해 작성된 글 상세보기 페이지로 이동
-                                NewPost.this.finish();
+
+                                new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + post_id,
+                                        new RestAPICaller.ApiCallback<PostDetailResponse>(
+                                                NewPost.this,
+                                                PostDetailResponse.class,
+                                                pd_data -> {
+                                                    Intent pd_intent = new Intent(NewPost.this, PostDetails.class);
+                                                    pd_intent.putExtra("post", (Serializable) pd_data);
+                                                    pd_intent.putExtra("lecture", lecture);
+                                                    startActivity(pd_intent);
+                                                    NewPost.this.finish();
+                                                }
+                                        )
+                                );
                             }
                     ));
         });
