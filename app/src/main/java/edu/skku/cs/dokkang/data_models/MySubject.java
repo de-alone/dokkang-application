@@ -4,7 +4,7 @@ package edu.skku.cs.dokkang.data_models;
 public class MySubject {
     private String name;
     private String professor;
-    private int id;
+    private long id;
     private String no;
     private boolean checked = false;
 
@@ -24,11 +24,11 @@ public class MySubject {
         this.professor = professor;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
