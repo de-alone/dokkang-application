@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.CommentListViewAdapter;
 import edu.skku.cs.dokkang.data_models.request.LikeRequest;
+import edu.skku.cs.dokkang.data_models.request.NewCommentRequest;
 import edu.skku.cs.dokkang.data_models.request.NewPostRequest;
 import edu.skku.cs.dokkang.data_models.request.SignUpRequest;
 import edu.skku.cs.dokkang.data_models.response.NewPostResponse;
@@ -108,5 +110,42 @@ public class PostDetails extends AppCompatActivity {
 
         // 댓글 전송 버튼 구현
         Button send_btn = findViewById(R.id.post_send_button);
+
+        send_btn.setOnClickListener(v -> {
+            EditText commentEditText = findViewById(R.id.postCommentEditText);
+            String comment = commentEditText.getText().toString();
+            Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
+            Long user_id = credential.first;
+            String token = credential.second;
+
+            NewCommentRequest data = new NewCommentRequest();
+            data.setUser_id(user_id);
+            data.setPost_id(post.getId());
+            data.setContent(comment);
+
+            String payload = new Gson().toJson(data);
+
+            new RestAPICaller(token).post(Constant.SERVER_BASE_URI + "/comment",
+                    payload,
+                    new RestAPICaller.ApiCallback<NewPostResponse>(
+                            PostDetails.this,
+                            NewPostResponse.class,
+                            res -> {
+                                if (res.getStatus().equals("ok")) {
+                                    PostDetails.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Toast.makeText(PostDetails.this, "add comment", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+
+                            }
+                    ));
+
+        });
+
     }
 }
