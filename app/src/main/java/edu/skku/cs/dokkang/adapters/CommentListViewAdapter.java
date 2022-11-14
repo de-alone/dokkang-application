@@ -17,6 +17,7 @@ import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.activities.CommunityMain;
+import edu.skku.cs.dokkang.activities.MyPage;
 import edu.skku.cs.dokkang.activities.PostDetails;
 import edu.skku.cs.dokkang.data_models.Comment;
 import edu.skku.cs.dokkang.data_models.response.PostDetailResponse;
@@ -58,13 +59,15 @@ public class CommentListViewAdapter extends BaseAdapter {
 
         time.setText(item.get(i).getCreated_at());
         content.setText(item.get(i).getContent());
+        CommunityMain communityMain_activity = (CommunityMain) CommunityMain.Community_activity;
 
-        new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + item.get(i).getUser_id(),
+
+        new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/user/" + item.get(i).getUser_id(),
                 new RestAPICaller.ApiCallback<UserDetailResponse>(
-                        (Activity) mContext,
+                        communityMain_activity,
                         UserDetailResponse.class,
                         data -> {
-                            ((Activity) mContext).runOnUiThread(new Runnable() {
+                            communityMain_activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     user.setText(data.getUsername());

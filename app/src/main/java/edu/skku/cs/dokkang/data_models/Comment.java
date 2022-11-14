@@ -1,6 +1,8 @@
 package edu.skku.cs.dokkang.data_models;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
     private long id;
     private long user_id;
     private String content;
