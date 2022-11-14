@@ -43,46 +43,65 @@ public class PostDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         String lecture = intent.getStringExtra("lecture");
-        PostDetailResponse post = (PostDetailResponse) intent.getSerializableExtra("post");
+        Long postID = intent.getLongExtra("PostId", -1);
+
+        Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
+        Long user_id = credential.first;
+        String token = credential.second;
+
+        /*서버로부터 게시글 세부 정보 가져와서 보여줌*/
+        new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + postID,
+                new RestAPICaller.ApiCallback<PostDetailResponse>(
+                        PostDetails.this,
+                        PostDetailResponse.class,
+                        post -> {
+                            PostDetails.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TextView lecture_name = findViewById(R.id.postLectureNameView);
+                                    lecture_name.setText(lecture);
+
+                                    TextView user = findViewById(R.id.post_name_textView);
+                                    user.setText(post.getUsername());
+
+                                    TextView time = findViewById(R.id.post_time_textView);
+                                    time.setText(post.getCreated_at());
+
+                                    TextView title = findViewById(R.id.post_title_textView);
+                                    title.setText(post.getTitle());
+
+                                    TextView content = findViewById(R.id.post_content_textView);
+                                    content.setText(post.getContent());
+
+                                    TextView num_like = findViewById(R.id.post_liketextview);
+                                    num_like.setText("Like: " + post.getNum_likes());
+
+                                    TextView comments = findViewById(R.id.postCommenttextview);
+                                    comments.setText("Comments: " + post.getComments().toArray().length);
+
+                                    comment_listView = findViewById(R.id.postCommentListView);
+                                    listViewAdapter = new CommentListViewAdapter(post.getComments(), getApplicationContext());
+                                    comment_listView.setAdapter(listViewAdapter);
+                                }
+                            });
+
+                        }
+                )
+        );
 
         PostDetail_activity = PostDetails.this;
 
-        TextView lecture_name = findViewById(R.id.postLectureNameView);
-        lecture_name.setText(lecture);
 
-        TextView user = findViewById(R.id.post_name_textView);
-        user.setText(post.getUsername());
-
-        TextView time = findViewById(R.id.post_time_textView);
-        time.setText(post.getCreated_at());
-
-        TextView title = findViewById(R.id.post_title_textView);
-        title.setText(post.getTitle());
-
-        TextView content = findViewById(R.id.post_content_textView);
-        content.setText(post.getContent());
-
-        TextView num_like = findViewById(R.id.post_liketextview);
-        num_like.setText("Like: " + post.getNum_likes());
-
-        TextView comments = findViewById(R.id.postCommenttextview);
-        comments.setText("Comments: " + post.getComments().toArray().length);
-
-        comment_listView = findViewById(R.id.postCommentListView);
-        listViewAdapter = new CommentListViewAdapter(post.getComments(), getApplicationContext());
-        comment_listView.setAdapter(listViewAdapter);
 
         // 좋아요 버튼 구현
         Button like_btn = findViewById(R.id.post_likebutton);
 
         like_btn.setOnClickListener(v -> {
-            Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
-            Long user_id = credential.first;
-            String token = credential.second;
+
 
             LikeRequest data = new LikeRequest();
             data.setUser_id(user_id);
-            data.setPost_id(post.getId());
+            data.setPost_id(postID);
 
             String payload = new Gson().toJson(data);
 
@@ -96,8 +115,12 @@ public class PostDetails extends AppCompatActivity {
                                     PostDetails.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            int like_num = post.getNum_likes() + 1;
-                                            num_like.setText("Like: " + like_num);
+                                            /*새로고침 후 토스트 메시지 띄우기*/
+                                            finish();
+                                            overridePendingTransition(0, 0);//인텐트 효과 없애기
+                                            Intent intent = getIntent();
+                                            startActivity(intent);
+                                            overridePendingTransition(0, 0);//인텐트 효과 없애기
                                             Toast.makeText(PostDetails.this, "Like", Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -114,13 +137,11 @@ public class PostDetails extends AppCompatActivity {
         send_btn.setOnClickListener(v -> {
             EditText commentEditText = findViewById(R.id.postCommentEditText);
             String comment = commentEditText.getText().toString();
-            Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
-            Long user_id = credential.first;
-            String token = credential.second;
+
 
             NewCommentRequest data = new NewCommentRequest();
             data.setUser_id(user_id);
-            data.setPost_id(post.getId());
+            data.setPost_id(postID);
             data.setContent(comment);
 
             String payload = new Gson().toJson(data);
@@ -135,7 +156,12 @@ public class PostDetails extends AppCompatActivity {
                                     PostDetails.this.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-
+                                            /*새로고침 후 토스트 메시지 띄우기*/
+                                            finish();
+                                            overridePendingTransition(0, 0);//인텐트 효과 없애기
+                                            Intent intent = getIntent();
+                                            startActivity(intent);
+                                            overridePendingTransition(0, 0);//인텐트 효과 없애기
                                             Toast.makeText(PostDetails.this, "add comment", Toast.LENGTH_SHORT).show();
                                         }
                                     });
