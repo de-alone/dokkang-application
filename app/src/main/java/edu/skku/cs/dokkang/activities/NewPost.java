@@ -62,21 +62,12 @@ public class NewPost extends AppCompatActivity {
                             NewPost.this,
                             NewPostResponse.class,
                             res -> {
-                                Long post_id = res.getPost_id();
+                                Intent pd_intent = new Intent(NewPost.this, PostDetails.class);
 
-                                new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + post_id,
-                                        new RestAPICaller.ApiCallback<PostDetailResponse>(
-                                                NewPost.this,
-                                                PostDetailResponse.class,
-                                                pd_data -> {
-                                                    Intent pd_intent = new Intent(NewPost.this, PostDetails.class);
-                                                    pd_intent.putExtra("post", (Serializable) pd_data);
-                                                    pd_intent.putExtra("lecture", lecture);
-                                                    startActivity(pd_intent);
-                                                    NewPost.this.finish();
-                                                }
-                                        )
-                                );
+                                pd_intent.putExtra("lecture", lecture);
+                                pd_intent.putExtra("PostId", res.getPost_id());
+                                startActivity(pd_intent);
+                                NewPost.this.finish();
                             }
                     ));
         });
