@@ -3,15 +3,30 @@ package edu.skku.cs.dokkang.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import java.io.Serializable;
+
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.RestAPICaller;
 import edu.skku.cs.dokkang.adapters.CommentListViewAdapter;
+import edu.skku.cs.dokkang.data_models.request.LikeRequest;
+import edu.skku.cs.dokkang.data_models.request.NewPostRequest;
+import edu.skku.cs.dokkang.data_models.request.SignUpRequest;
+import edu.skku.cs.dokkang.data_models.response.NewPostResponse;
 import edu.skku.cs.dokkang.data_models.response.PostDetailResponse;
+import edu.skku.cs.dokkang.data_models.response.SignUpResponse;
+import edu.skku.cs.dokkang.utils.Credential;
 
 public class PostDetails extends AppCompatActivity {
 
@@ -57,6 +72,39 @@ public class PostDetails extends AppCompatActivity {
 
         // 좋아요 버튼 구현
         Button like_btn = findViewById(R.id.post_likebutton);
+
+        like_btn.setOnClickListener(v -> {
+            Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
+            Long user_id = credential.first;
+            String token = credential.second;
+
+            LikeRequest data = new LikeRequest();
+            data.setUser_id(user_id);
+            data.setPost_id(post.getId());
+
+            String payload = new Gson().toJson(data);
+
+            new RestAPICaller(token).post(Constant.SERVER_BASE_URI + "/like",
+                    payload,
+                    new RestAPICaller.ApiCallback<NewPostResponse>(
+                            PostDetails.this,
+                            NewPostResponse.class,
+                            res -> {
+                                if (res.getStatus().equals("ok")) {
+                                    PostDetails.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            int like_num = post.getNum_likes() + 1;
+                                            num_like.setText("Like: " + like_num);
+                                            Toast.makeText(PostDetails.this, "Like", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+
+                            }
+                    ));
+        });
 
         // 댓글 전송 버튼 구현
         Button send_btn = findViewById(R.id.post_send_button);
