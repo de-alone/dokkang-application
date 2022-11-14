@@ -114,25 +114,17 @@ public class CommunityMain extends AppCompatActivity {
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final LecturePost item = (LecturePost) listViewAdapter.getItem(i);
+                Intent pd_intent = new Intent(CommunityMain.this, PostDetails.class);
+                pd_intent.putExtra("lecture", lecture);
+                pd_intent.putExtra("PostId", item.getId());
+                startActivity(pd_intent);
 
-                Pair<Long, String> credential = new Credential(CommunityMain.this).loadCredentials();
-                String token = credential.second;
 
-                new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + item.getId(),
-                        new RestAPICaller.ApiCallback<PostDetailResponse>(
-                                CommunityMain.this,
-                                PostDetailResponse.class,
-                                data -> {
-                                    Intent pd_intent = new Intent(CommunityMain.this, PostDetails.class);
-                                    pd_intent.putExtra("post", (Serializable) data);
-                                    pd_intent.putExtra("lecture", lecture);
-                                    startActivity(pd_intent);
-                                }
-                        )
-                );
             }
         });
     }
