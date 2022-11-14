@@ -45,6 +45,11 @@ public class PostDetails extends AppCompatActivity {
         String lecture = intent.getStringExtra("lecture");
         Long postID = intent.getLongExtra("PostId", -1);
 
+        if (postID == -1) {
+            PostDetails.this.runOnUiThread(() -> Toast.makeText(PostDetails.this, "게시글을 불러오는데 오류가 발생하였습니다.", Toast.LENGTH_SHORT).show());
+            finish();
+        }
+
         Pair<Long, String> credential = new Credential(PostDetails.this).loadCredentials();
         Long user_id = credential.first;
         String token = credential.second;
