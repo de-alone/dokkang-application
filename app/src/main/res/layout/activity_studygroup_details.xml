@@ -19,60 +19,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/sg_liketextview"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="#004907"
-        android:gravity="center"
-        android:text="Like: 0"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/sg_likebutton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sg_likebutton"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="#413211"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:text="Like"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/sg_liketextview"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/sgCommenttextview"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="#004907"
-        android:gravity="center|end"
-        android:paddingRight="8dp"
-        android:text="Comments: 0"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/sg_likebutton"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/sgCommentListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/sgCommentEditText"
-        app:layout_constraintTop_toBottomOf="@id/sg_likebutton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        />
+        app:layout_constraintBottom_toTopOf="@id/sgCommentEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     <EditText
         android:id="@+id/sgCommentEditText"
@@ -131,82 +86,168 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sg_name_textView" />
 
-    <TextView
-        android:id="@+id/sg_content_textView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
-        android:paddingStart="2dp"
-        android:text="TextView"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sg_title_textView" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/sgCommenttextview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sg_title_textView">
+
+        <TextView
+            android:id="@+id/placeTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장소: ***"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeTextview">
 
             <TextView
                 android:id="@+id/dateTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="64dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/placeTextview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="horizontal">
+                android:layout_marginEnd="10dp"
+                android:text="시간: ***"
+                android:textStyle="bold"
+                android:textColor="@color/green"/>
 
             <TextView
                 android:id="@+id/memberTextview"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:text="Member : 1/5" />
-
-            <Button
-                android:id="@+id/participate_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:backgroundTint="#004907"
-                android:text="참여"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="모집인원: ***"
+                android:textStyle="bold"
+                android:textColor="@color/green"/>
 
         </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/sg_content_textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="TextView"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/currentMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="인원: 1/5"
+            android:textColor="@color/green"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/participate_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참여" />
 
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/sg_liketextview"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:background="#004907"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sg_likebutton"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:background="#413211"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Like"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sg_liketextview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sgCommenttextview"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:background="#004907"
+            android:gravity="center"
+            android:paddingRight="8dp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/likewhite" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toStartOf="@+id/sgCommenttextview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/commentwhite" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
