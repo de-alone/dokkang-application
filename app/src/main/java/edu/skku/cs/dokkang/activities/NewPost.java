@@ -8,21 +8,15 @@ import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
 import edu.skku.cs.dokkang.RestAPICaller;
-import edu.skku.cs.dokkang.data_models.LecturePost;
 import edu.skku.cs.dokkang.data_models.request.NewPostRequest;
 import edu.skku.cs.dokkang.data_models.response.NewPostResponse;
-import edu.skku.cs.dokkang.data_models.response.PostDetailResponse;
-import edu.skku.cs.dokkang.data_models.response.PostListResponse;
 import edu.skku.cs.dokkang.utils.Credential;
 
 public class NewPost extends AppCompatActivity {
@@ -48,6 +42,11 @@ public class NewPost extends AppCompatActivity {
             Pair<Long, String> credential = new Credential(NewPost.this).loadCredentials();
             Long user_id = credential.first;
             String token = credential.second;
+
+            if (postTitleEditText.getText().toString().equals("") || postContentEditText.getText().toString().equals("")) {
+                Toast.makeText(NewPost.this, "Please fill in the blanks.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             NewPostRequest data = new NewPostRequest();
             data.setUser_id(user_id);
