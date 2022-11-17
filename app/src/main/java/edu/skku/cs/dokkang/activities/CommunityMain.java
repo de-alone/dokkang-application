@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,12 +65,24 @@ public class CommunityMain extends AppCompatActivity {
         listViewAdapter = new LecturePostListViewAdapter(Collections.emptyList(), getApplicationContext());
         listView.setAdapter(listViewAdapter);
 
+        ImageButton refresh = findViewById(R.id.communityRefreshButton);
+
+        refresh.setOnClickListener(view -> {
+            finish();
+            overridePendingTransition(0, 0);
+            Intent new_intent = getIntent();
+            startActivity(new_intent);
+            overridePendingTransition(0, 0);
+        });
+
         add_btn.setOnClickListener(view -> {
             Intent add_intent = new Intent(Community_activity, NewPost.class);
             add_intent.putExtra("lecture_id", lecture_id);
             add_intent.putExtra("lecture", lecture);
             startActivity(add_intent);
         });
+
+
 
         listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
