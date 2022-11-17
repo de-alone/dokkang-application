@@ -88,4 +88,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="40dp"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/studyGroupRefreshButton"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:background="@drawable/button_style"
+        app:layout_constraintBottom_toBottomOf="@+id/sg_subjectNameView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sg_subjectNameView"
+        android:src="@drawable/refresh"
+        android:scaleType="fitCenter"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

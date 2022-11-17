@@ -2,10 +2,12 @@ package edu.skku.cs.dokkang.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,6 +54,15 @@ public class StudyGroupMain extends AppCompatActivity {
 
         TextView lecture_name = findViewById(R.id.sg_subjectNameView);
         lecture_name.setText(lecture);
+        ImageButton refresh = findViewById(R.id.studyGroupRefreshButton);
+
+        refresh.setOnClickListener(view -> {
+            finish();
+            overridePendingTransition(0, 0);
+            Intent new_intent = getIntent();
+            startActivity(new_intent);
+            overridePendingTransition(0, 0);
+        });
 
         StudyGroup_activity = StudyGroupMain.this;
         listView = findViewById(R.id.sg_postlistView);
