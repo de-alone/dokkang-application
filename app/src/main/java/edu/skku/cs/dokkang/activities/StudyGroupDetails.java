@@ -82,19 +82,22 @@ public class StudyGroupDetails extends AppCompatActivity {
                                     content.setText(studygroup.getContent());
 
                                     TextView num_like = findViewById(R.id.sg_liketextview);
-                                    num_like.setText("Like: " + studygroup.getNum_likes());
+                                    num_like.setText(Integer.toString(studygroup.getNum_likes()));
 
                                     TextView comments = findViewById(R.id.sgCommenttextview);
-                                    comments.setText("Comments: " + studygroup.getComments().toArray().length);
+                                    comments.setText(Integer.toString(studygroup.getComments().toArray().length));
 
                                     TextView date = findViewById(R.id.dateTextview);
-                                    date.setText(studygroup.getStudytime());
+                                    date.setText("시간: " + studygroup.getStudytime());
 
                                     TextView place = findViewById(R.id.placeTextview);
-                                    place.setText(studygroup.getStudyplace());
+                                    place.setText("장소: " + studygroup.getStudyplace());
 
                                     TextView member = findViewById(R.id.memberTextview);
-                                    member.setText("Member: " + studygroup.getParticipants().size() + "/" + studygroup.getStudycapacity());
+                                    member.setText("모집인원: " + studygroup.getStudycapacity());
+
+                                    TextView currentMember = findViewById(R.id.currentMember);
+                                    currentMember.setText("인원: " + studygroup.getParticipants().size() + "/" + studygroup.getStudycapacity());
 
                                     comment_listView = findViewById(R.id.sgCommentListView);
                                     listViewAdapter = new CommentListViewAdapter(studygroup.getComments(), getApplicationContext(), StudyGroupDetails_activity);
