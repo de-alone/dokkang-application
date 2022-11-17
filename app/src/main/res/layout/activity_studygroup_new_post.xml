@@ -7,7 +7,7 @@
     tools:context=".activities.NewPost">
 
     <TextView
-        android:id="@+id/newPostSubjectNameView"
+        android:id="@+id/sg_newPostSubjectNameView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#004907"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/postTitleEditText"
+        android:id="@+id/sg_postTitleEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
@@ -36,7 +36,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPostSubjectNameView" />
+        app:layout_constraintTop_toBottomOf="@+id/sg_newPostSubjectNameView" />
 
     <EditText
         android:id="@+id/postNumEditText"
@@ -53,15 +53,15 @@
         android:paddingStart="2dp"
         android:paddingTop="2dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/dateTitleEditText"
+        app:layout_constraintBottom_toTopOf="@+id/dateEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postContentEditText"
+        app:layout_constraintTop_toBottomOf="@+id/sg_postContentEditText"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/dateTitleEditText"
+        android:id="@+id/dateEditText"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -74,7 +74,7 @@
         android:paddingStart="2dp"
         android:paddingTop="2dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/placeTitleEditText"
+        app:layout_constraintBottom_toTopOf="@+id/placeEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/placeTitleEditText"
+        android:id="@+id/placeEditText"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -95,15 +95,15 @@
         android:paddingStart="2dp"
         android:paddingTop="2dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/postButton"
+        app:layout_constraintBottom_toTopOf="@+id/sg_postButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTitleEditText"
+        app:layout_constraintTop_toBottomOf="@+id/dateEditText"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/postButton"
+        android:id="@+id/sg_postButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
@@ -115,7 +115,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/postContentEditText"
+        android:id="@+id/sg_postContentEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -133,6 +133,6 @@
         app:layout_constraintBottom_toTopOf="@+id/postNumEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postTitleEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/sg_postTitleEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

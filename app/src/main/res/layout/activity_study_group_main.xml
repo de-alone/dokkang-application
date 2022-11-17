@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sg_myCommentsButton"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintStart_toEndOf="@+id/myPostsButton"
+        app:layout_constraintStart_toEndOf="@+id/sg_myPostsButton"
         app:layout_constraintWidth_percent="0.333333" />
 
     <Button
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/postlistView"
+        android:id="@+id/sg_postlistView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/sg_likedPostsButton"
