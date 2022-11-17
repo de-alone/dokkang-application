@@ -8,13 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.data_models.LecturePost;
 import edu.skku.cs.dokkang.data_models.StudyGroupPost;
 
 public class StudyGroupPostListViewAdapter extends BaseAdapter {
-    private final List<StudyGroupPost> item;
+    private List<StudyGroupPost> item;
     private final Context mContext;
 
     public StudyGroupPostListViewAdapter(List<StudyGroupPost> item, Context mContext) {
@@ -30,6 +32,13 @@ public class StudyGroupPostListViewAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
         return item.get(i);
+    }
+
+    public void addItems(List<StudyGroupPost> newItem) {
+        List<StudyGroupPost> item = new ArrayList<>();
+        item.addAll(this.item);
+        item.addAll(newItem);
+        this.item = item;
     }
 
     @Override
@@ -51,10 +60,10 @@ public class StudyGroupPostListViewAdapter extends BaseAdapter {
         ImageView comment = view.findViewById(R.id.commentImage);
         TextView commentNum = view.findViewById(R.id.commentNum);
 
-        if (item.get(i).getNum_total() == item.get(i).getNum_participant()) {
-            state.setText("Closed");
-        } else {
+        if (item.get(i).isOpened()) {
             state.setText("Open");
+        } else {
+            state.setText("Closed");
         }
 
         postTitle.setText(item.get(i).getTitle());
