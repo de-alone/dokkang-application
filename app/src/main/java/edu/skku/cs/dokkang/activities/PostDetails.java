@@ -81,10 +81,10 @@ public class PostDetails extends AppCompatActivity {
                                     content.setText(post.getContent());
 
                                     TextView num_like = findViewById(R.id.post_liketextview);
-                                    num_like.setText("Like: " + post.getNum_likes());
+                                    num_like.setText(Integer.toString(post.getNum_likes()));
 
                                     TextView comments = findViewById(R.id.postCommenttextview);
-                                    comments.setText("Comments: " + post.getComments().toArray().length);
+                                    comments.setText(Integer.toString(post.getComments().toArray().length));
 
                                     comment_listView = findViewById(R.id.postCommentListView);
                                     listViewAdapter = new CommentListViewAdapter(post.getComments(), getApplicationContext(), PostDetail_activity);

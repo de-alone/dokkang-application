@@ -19,59 +19,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/post_liketextview"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:text="Like: 0"
-        android:gravity="center"
-        android:background="#004907"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/post_likebutton"
-         />
-
-    <Button
-        android:id="@+id/post_likebutton"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:text="Like"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/post_liketextview"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:background="#413211"
-        android:textColor="#FFFFFF"
-        />
-
-    <TextView
-        android:id="@+id/postCommenttextview"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="#004907"
-        android:gravity="center|end"
-        android:paddingRight="8dp"
-        android:text="Comments: 0"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/post_likebutton"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/postCommentListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/postCommentEditText"
-        app:layout_constraintTop_toBottomOf="@id/post_likebutton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        />
+        app:layout_constraintBottom_toTopOf="@id/postCommentEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <EditText
         android:id="@+id/postCommentEditText"
@@ -140,8 +96,85 @@
         android:paddingStart="2dp"
         android:text="TextView"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/post_likebutton"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/post_title_textView" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="#004907"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:background="#004907"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/likewhite" />
+
+        <Button
+            android:id="@+id/post_likebutton"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:background="#413211"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Like"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_liketextview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/postCommenttextview"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:background="#004907"
+            android:gravity="center"
+            android:paddingRight="8dp"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:background="#004907"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/postCommenttextview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/commentwhite" />
+
+        <TextView
+            android:id="@+id/post_liketextview"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:background="#004907"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
