@@ -1,7 +1,9 @@
 package edu.skku.cs.dokkang.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,16 +15,31 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import edu.skku.cs.dokkang.Constant;
 import edu.skku.cs.dokkang.R;
+import edu.skku.cs.dokkang.RestAPICaller;
+import edu.skku.cs.dokkang.adapters.LecturePostListViewAdapter;
 import edu.skku.cs.dokkang.adapters.StudyGroupPostListViewAdapter;
+import edu.skku.cs.dokkang.data_models.LecturePost;
 import edu.skku.cs.dokkang.data_models.StudyGroupPost;
+import edu.skku.cs.dokkang.data_models.response.PostListResponse;
+import edu.skku.cs.dokkang.data_models.response.StudyGroupListResponse;
+import edu.skku.cs.dokkang.utils.Credential;
 
 public class StudyGroupMain extends AppCompatActivity {
-    private ListView listView;
 
+    public static Activity StudyGroup_activity;
+    private ListView listView;
+    private Boolean endOfPost = false;
+    public String before = null;
+    private static final String postFetchLimit = "10";
+    private static Boolean updating = false;
     private StudyGroupPostListViewAdapter listViewAdapter;
-    private ArrayList<StudyGroupPost> study_groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,40 +47,75 @@ public class StudyGroupMain extends AppCompatActivity {
         setContentView(R.layout.activity_study_group_main);
 
         Intent intent = getIntent();
+        long lecture_id = intent.getLongExtra("lecture_id", -1);
         String lecture = intent.getStringExtra("lecture");
-        String professor = intent.getStringExtra("professor");
-        int lecture_id = intent.getIntExtra("lecture_id", 0);
-        String lecture_no = intent.getStringExtra("lecture_no");
 
         TextView lecture_name = findViewById(R.id.sg_subjectNameView);
         lecture_name.setText(lecture);
 
-        study_groups = new ArrayList<>();
-        StudyGroupPost post1 = new StudyGroupPost("기말고사 공부", 7, 0, 2, 5, "2022-11-30 5pm", "도서관 1층");
-        StudyGroupPost post2 = new StudyGroupPost("testing 공부", 10, 0, 6, 6, "2022-11-21 2pm", "A카페");
-        post1.setContent("같이 기말고사 대비 공부하실 분들 환영합니다~");
-        post2.setContent("sw testing이 어려워서 같이 공부하실 분들 찾아요");
-        study_groups.add(post1);
-        study_groups.add(post2);
-
-        listView = findViewById(R.id.postlistView);
-        listViewAdapter = new StudyGroupPostListViewAdapter(study_groups, getApplicationContext());
+        StudyGroup_activity = StudyGroupMain.this;
+        listView = findViewById(R.id.sg_postlistView);
+        listViewAdapter = new StudyGroupPostListViewAdapter(Collections.emptyList(), getApplicationContext());
         listView.setAdapter(listViewAdapter);
+
+        listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // 스크롤이 최하단이 아니거나 이미 모든 글을 불러왔으면 종료
+                if (endOfPost || StudyGroupMain.updating || view.canScrollVertically(1)) {
+                    return;
+                }
+                updating = true;
+
+                Pair<Long, String> credential = new Credential(StudyGroup_activity).loadCredentials();
+                Long user_id = credential.first;
+                String token = credential.second;
+
+                String URI = Constant.SERVER_BASE_URI + "/lecture/" + String.valueOf(lecture_id) + "/studygroups";
+                Map<String, String> queries = new HashMap<>();
+                queries.put("limit", postFetchLimit);
+                if (before != null) {
+                    queries.put("before", before);
+                }
+                new RestAPICaller(token).get(URI,
+                        queries,
+                        new RestAPICaller.ApiCallback<StudyGroupListResponse>(
+                                StudyGroup_activity,
+                                StudyGroupListResponse.class,
+                                data -> {
+                                    List<StudyGroupPost> posts = data.getStudygroups();
+
+                                    listViewAdapter.addItems(posts);
+                                    before = data.getBefore();
+
+                                    StudyGroup_activity.runOnUiThread(listViewAdapter::notifyDataSetChanged);
+
+                                    if (posts.size() == 0) {
+                                        endOfPost = true;
+                                    }
+
+                                    updating = false;
+                                }
+                        ));
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final StudyGroupPost item = (StudyGroupPost) listViewAdapter.getItem(i);
-                Intent detail_intent = new Intent(StudyGroupMain.this, StudyGroupDetails.class);
-                detail_intent.putExtra("studygroup", (Serializable) item);
+                Intent detail_intent = new Intent(StudyGroup_activity, StudyGroupDetails.class);
                 detail_intent.putExtra("lecture", lecture);
+                detail_intent.putExtra("PostId", item.getId());
                 startActivity(detail_intent);
             }
         });
 
         FloatingActionButton add_btn = findViewById(R.id.sg_addPostButton);
         add_btn.setOnClickListener(view -> {
-            Intent np_intent = new Intent(StudyGroupMain.this, StudyGroupNewPost.class);
+            Intent np_intent = new Intent(StudyGroup_activity, StudyGroupNewPost.class);
+            np_intent.putExtra("lecture_id", lecture_id);
+            np_intent.putExtra("lecture", lecture);
             startActivity(np_intent);
         });
     }
