@@ -54,6 +54,8 @@ public class PostDetails extends AppCompatActivity {
         Long user_id = credential.first;
         String token = credential.second;
 
+        PostDetail_activity = PostDetails.this;
+
         /*서버로부터 게시글 세부 정보 가져와서 보여줌*/
         new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/post/" + postID,
                 new RestAPICaller.ApiCallback<PostDetailResponse>(
@@ -85,7 +87,7 @@ public class PostDetails extends AppCompatActivity {
                                     comments.setText("Comments: " + post.getComments().toArray().length);
 
                                     comment_listView = findViewById(R.id.postCommentListView);
-                                    listViewAdapter = new CommentListViewAdapter(post.getComments(), getApplicationContext());
+                                    listViewAdapter = new CommentListViewAdapter(post.getComments(), getApplicationContext(), PostDetail_activity);
                                     comment_listView.setAdapter(listViewAdapter);
                                 }
                             });
@@ -93,10 +95,6 @@ public class PostDetails extends AppCompatActivity {
                         }
                 )
         );
-
-        PostDetail_activity = PostDetails.this;
-
-
 
         // 좋아요 버튼 구현
         Button like_btn = findViewById(R.id.post_likebutton);
@@ -143,6 +141,10 @@ public class PostDetails extends AppCompatActivity {
             EditText commentEditText = findViewById(R.id.postCommentEditText);
             String comment = commentEditText.getText().toString();
 
+            if (comment.equals("")) {
+                Toast.makeText(PostDetail_activity, "Please write comments.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             NewCommentRequest data = new NewCommentRequest();
             data.setUser_id(user_id);
@@ -157,6 +159,7 @@ public class PostDetails extends AppCompatActivity {
                             PostDetails.this,
                             NewPostResponse.class,
                             res -> {
+
                                 if (res.getStatus().equals("ok")) {
                                     PostDetails.this.runOnUiThread(new Runnable() {
                                         @Override
