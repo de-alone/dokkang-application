@@ -28,10 +28,12 @@ public class CommentListViewAdapter extends BaseAdapter {
 
     private List<Comment> item;
     private final Context mContext;
+    private Activity activity;
 
-    public CommentListViewAdapter(List<Comment> item, Context mContext) {
+    public CommentListViewAdapter(List<Comment> item, Context mContext, Activity activity) {
         this.item = item;
         this.mContext = mContext;
+        this.activity = activity;
     }
 
     @Override
@@ -59,15 +61,13 @@ public class CommentListViewAdapter extends BaseAdapter {
 
         time.setText(item.get(i).getCreated_at());
         content.setText(item.get(i).getContent());
-        CommunityMain communityMain_activity = (CommunityMain) CommunityMain.Community_activity;
-
 
         new RestAPICaller(token).get(Constant.SERVER_BASE_URI + "/user/" + item.get(i).getUser_id(),
                 new RestAPICaller.ApiCallback<UserDetailResponse>(
-                        communityMain_activity,
+                        activity,
                         UserDetailResponse.class,
                         data -> {
-                            communityMain_activity.runOnUiThread(new Runnable() {
+                            activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     user.setText(data.getUsername());
